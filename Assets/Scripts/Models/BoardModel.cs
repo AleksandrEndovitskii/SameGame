@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 public class BoardModel
 {
+	public List<List<Square>> Squares => _squares;
+
 	private readonly List<List<Square>> _squares;
 
 	public BoardModel(int rowsCount, int cellsCount)
