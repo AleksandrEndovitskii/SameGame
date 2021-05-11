@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 790944698368268136}
   - component: {fileID: 7306322849308396314}
   - component: {fileID: 477036741953595205}
+  - component: {fileID: 6799263875346145196}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -88,3 +89,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boardViewPrefab: {fileID: -3522549316008995068, guid: 6c902be91542331438a7e4cfbbf89cad, type: 3}
   _squareViewPrefab: {fileID: -5566016592281480407, guid: a005c35daf087344181e304cd7493581, type: 3}
+  _pieceViewPrefab: {fileID: -6108238059475710485, guid: b7b581e4ad035a44ebc2124321435951, type: 3}
+--- !u!114 &6799263875346145196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583358112190840174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6a628162374365afabc820b7dc1838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  _piecePerColorCount: 1

@@ -11,6 +11,8 @@ namespace Managers
         private BoardView _boardViewPrefab;
         [SerializeField]
         private SquareView _squareViewPrefab;
+        [SerializeField]
+        private PieceView _pieceViewPrefab;
 
         private BoardView _boardViewInstance;
 
@@ -36,6 +38,12 @@ namespace Managers
             _boardViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
 
+        public PieceView CreatePiece(PieceModel pieceModel)
+        {
+            var pieceViewInstance = Instantiate(_pieceViewPrefab);
+            pieceViewInstance.Initialize(pieceModel);
+            return pieceViewInstance;
+        }
         public SquareView CreateSquare(SquareModel squareModel)
         {
             var squareViewInstance = Instantiate(_squareViewPrefab);

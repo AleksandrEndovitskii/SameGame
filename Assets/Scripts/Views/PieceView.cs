@@ -1,14 +1,13 @@
 using System;
+using Models;
 using UnityEngine;
-using Views;
 
-namespace Models
+namespace Views
 {
-    public class SquareModel
+    public class PieceView : MonoBehaviour
     {
         public Action<PieceModel> PieceModelChanged = delegate {  };
 
-        public Vector2 Index => _index;
         public PieceModel PieceModel
         {
             get
@@ -32,16 +31,9 @@ namespace Models
 
         private PieceModel _pieceModel;
 
-        public SquareModel Top;
-        public SquareModel Right;
-        public SquareModel Left;
-        public SquareModel Bot;
-
-        private Vector2 _index;
-
-        public SquareModel(Vector2 index)
+        public void Initialize(PieceModel pieceModel)
         {
-            _index = index;
+            PieceModel = pieceModel;
         }
     }
 }

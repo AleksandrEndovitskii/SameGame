@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Linq;
 using Models;
 using UnityEngine;
 using Utils;
@@ -40,6 +41,15 @@ namespace Managers
         public void Initialize()
         {
             BoardModel = new BoardModel(_rowsCount, _cellsCount);
+        }
+
+        public SquareModel GetFreeSquareModel()
+        {
+            var squareModelsRowWithFreeSquare =
+                BoardModel.SquareModels.FirstOrDefault(x => x.Any(y => y.PieceModel == null));
+            var freeSquareModel = squareModelsRowWithFreeSquare?.FirstOrDefault(x => x.PieceModel == null);
+
+            return freeSquareModel;
         }
     }
 }
