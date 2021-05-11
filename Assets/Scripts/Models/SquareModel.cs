@@ -54,8 +54,6 @@ namespace Models
             }
 
             PieceModel = null;
-
-            Debug.Log("Score +1");
         }
     }
 }
