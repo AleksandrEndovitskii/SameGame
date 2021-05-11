@@ -49,11 +49,11 @@ namespace Views
         }
         private void Fill()
         {
-            for (var i = 0; i < _boardModel.Squares.Count; i++)
+            for (var i = 0; i < _boardModel.SquareModels.Count; i++)
             {
                 var squareViewsRow = new List<SquareView>();
                 _squareViewInstances.Add(squareViewsRow);
-                for (var j = 0; j < _boardModel.Squares[i].Count; j++)
+                for (var j = 0; j < _boardModel.SquareModels[i].Count; j++)
                 {
                     var squareViewInstance = GameManager.Instance.GameObjectsManager.CreateSquare();
                     squareViewInstance.gameObject.transform.SetParent(this.gameObject.transform);
