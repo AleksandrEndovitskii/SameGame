@@ -17,10 +17,22 @@ namespace Managers
         {
             _boardViewInstance = CreateBoard();
             _boardViewInstance.gameObject.transform.SetParent(GameManager.Instance.UserInterfaceManager.CanvasInstance.transform);
-            _boardViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+            RedrawCompleted();
+            _boardViewInstance.RedrawCompleted += RedrawCompleted;
         }
         public void UnInitialize()
         {
+        }
+
+        private void RedrawCompleted()
+        {
+            CenterBoardViewInstancePosition();
+        }
+
+        private void CenterBoardViewInstancePosition()
+        {
+            _boardViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
 
         public SquareView CreateSquare()
