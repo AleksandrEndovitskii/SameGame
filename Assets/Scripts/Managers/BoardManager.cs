@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Models;
 using UnityEngine;
 using Utils;
@@ -39,7 +39,7 @@ namespace Managers
 
         public void Initialize()
         {
-            _boardModel = new BoardModel(_rowsCount, _cellsCount);
+            BoardModel = new BoardModel(_rowsCount, _cellsCount);
         }
     }
 }
