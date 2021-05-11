@@ -31,7 +31,6 @@ namespace Views
         }
         protected override void UnSubscribe()
         {
-            GameManager.Instance.BoardManager.BoardModelChanged -= BoardModelChanged;
         }
 
         private void Redraw()
