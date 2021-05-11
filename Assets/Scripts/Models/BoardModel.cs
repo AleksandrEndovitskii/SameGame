@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Models
 {
@@ -23,7 +24,7 @@ namespace Models
 				squareModels.Add(squaresRow);
 				for (var j = 0; j < cellsCount; j++)
 				{
-					squareModels[i].Add(new SquareModel());
+					squareModels[i].Add(new SquareModel(new Vector2(i, j)));
 				}
 			}
 		}

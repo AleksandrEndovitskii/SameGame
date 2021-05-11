@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Models;
+using UnityEngine;
 using Utils;
 using Views;
 
@@ -35,9 +36,10 @@ namespace Managers
             _boardViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
 
-        public SquareView CreateSquare()
+        public SquareView CreateSquare(SquareModel squareModel)
         {
             var squareViewInstance = Instantiate(_squareViewPrefab);
+            squareViewInstance.Initialize(squareModel);
             return squareViewInstance;
         }
         public BoardView CreateBoard()

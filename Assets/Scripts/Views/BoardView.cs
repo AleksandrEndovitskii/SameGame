@@ -61,7 +61,8 @@ namespace Views
                 _squareViewInstances.Add(squareViewsRow);
                 for (var j = 0; j < _boardModel.SquareModels[i].Count; j++)
                 {
-                    var squareViewInstance = GameManager.Instance.GameObjectsManager.CreateSquare();
+                    var squareModel = _boardModel.SquareModels[i][j];
+                    var squareViewInstance = GameManager.Instance.GameObjectsManager.CreateSquare(squareModel);
                     squareViewInstance.gameObject.transform.SetParent(this.gameObject.transform);
                     _squareViewInstances[i].Add(squareViewInstance);
                 }
