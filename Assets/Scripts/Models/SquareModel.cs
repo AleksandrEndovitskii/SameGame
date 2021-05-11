@@ -53,7 +53,25 @@ namespace Models
                 return;
             }
 
+            Top?.TryRemovePieceModel(PieceModel);
+            Right?.TryRemovePieceModel(PieceModel);
+            Left?.TryRemovePieceModel(PieceModel);
+            Bot?.TryRemovePieceModel(PieceModel);
             PieceModel = null;
+        }
+
+        private void TryRemovePieceModel(PieceModel pieceModel)
+        {
+            if (pieceModel == null ||
+                PieceModel == null ||
+                pieceModel.Color != PieceModel.Color)
+            {
+                Debug.Log($"{this.GetType().Name}.{nameof(TryRemovePieceModel)} aborted");
+
+                return;
+            }
+
+            GameManager.Instance.PiecesManager.Remove(PieceModel);
         }
     }
 }

@@ -40,6 +40,8 @@ namespace Components
                 return;
             }
 
+            Debug.Log($"{this.GetType().Name}.{nameof(ButtonOnClick)}");
+
             GameManager.Instance.PiecesManager.Remove(_pieceView.PieceModel);
         }
     }

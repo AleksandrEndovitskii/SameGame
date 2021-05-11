@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _colors:
   - {r: 1, g: 0, b: 0, a: 1}
-  _piecePerColorCount: 1
+  _piecePerColorCount: 3
 --- !u!114 &6630504713707442612
 MonoBehaviour:
   m_ObjectHideFlags: 0

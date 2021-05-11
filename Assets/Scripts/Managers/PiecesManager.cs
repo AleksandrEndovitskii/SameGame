@@ -27,6 +27,13 @@ namespace Managers
 
         public void Add(PieceModel pieceModel)
         {
+            if (_pieceModels.Contains(pieceModel))
+            {
+                Debug.Log($"{this.GetType().Name}.{nameof(Add)} aborted");
+
+                return;
+            }
+
             _pieceModels.Add(pieceModel);
 
             Debug.Log($"{this.GetType().Name}.{nameof(PieceModelAdded)}");
@@ -35,6 +42,13 @@ namespace Managers
         }
         public void Remove(PieceModel pieceModel)
         {
+            if (!_pieceModels.Contains(pieceModel))
+            {
+                Debug.Log($"{this.GetType().Name}.{nameof(Remove)} aborted");
+
+                return;
+            }
+
             _pieceModels.Remove(pieceModel);
 
             Debug.Log($"{this.GetType().Name}.{nameof(PieceModelRemoved)}");
