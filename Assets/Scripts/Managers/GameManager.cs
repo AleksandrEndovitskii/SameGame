@@ -1,12 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Utils;
 
 namespace Managers
 {
+    [RequireComponent(typeof(UserInterfaceManager))]
     public class GameManager : MonoBehaviour, IInitilizable
     {
         // static instance of GameManager which allows it to be accessed by any other script
         public static GameManager Instance;
+
+        public UserInterfaceManager UserInterfaceManager => this.gameObject.GetComponent<UserInterfaceManager>();
 
         private void Awake()
         {
@@ -30,7 +33,7 @@ namespace Managers
 
         public void Initialize()
         {
-
+            UserInterfaceManager.Initialize();
         }
     }
 }
