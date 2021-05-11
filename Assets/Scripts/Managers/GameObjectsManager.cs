@@ -17,6 +17,7 @@ namespace Managers
         {
             _boardViewInstance = CreateBoard();
             _boardViewInstance.gameObject.transform.SetParent(GameManager.Instance.UserInterfaceManager.CanvasInstance.transform);
+            _boardViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         }
         public void UnInitialize()
         {
