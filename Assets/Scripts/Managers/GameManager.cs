@@ -4,12 +4,14 @@ using Utils;
 namespace Managers
 {
     [RequireComponent(typeof(UserInterfaceManager))]
+    [RequireComponent(typeof(BoardManager))]
     public class GameManager : MonoBehaviour, IInitilizable
     {
         // static instance of GameManager which allows it to be accessed by any other script
         public static GameManager Instance;
 
         public UserInterfaceManager UserInterfaceManager => this.gameObject.GetComponent<UserInterfaceManager>();
+        public BoardManager BoardManager => this.gameObject.GetComponent<BoardManager>();
 
         private void Awake()
         {
@@ -34,6 +36,7 @@ namespace Managers
         public void Initialize()
         {
             UserInterfaceManager.Initialize();
+            BoardManager.Initialize();
         }
     }
 }
