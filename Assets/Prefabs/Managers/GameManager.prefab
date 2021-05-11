@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3196578525837509296}
   - component: {fileID: 790944698368268136}
   - component: {fileID: 7306322849308396314}
+  - component: {fileID: 477036741953595205}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -73,3 +74,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvasPrefab: {fileID: 4552370098517156293, guid: 509b28c01db7404499c0f63548d9f169, type: 3}
   _eventSystemPrefab: {fileID: 2344229784064412810, guid: 1fcc441f7b12acd45ae4f47fde557fcd, type: 3}
+--- !u!114 &477036741953595205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583358112190840174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2551b5de83dd40a7932faa3e58526f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boardViewPrefab: {fileID: -3522549316008995068, guid: 6c902be91542331438a7e4cfbbf89cad, type: 3}
+  _squareViewPrefab: {fileID: -5566016592281480407, guid: a005c35daf087344181e304cd7493581, type: 3}
