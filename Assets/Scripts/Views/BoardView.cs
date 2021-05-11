@@ -13,12 +13,11 @@ namespace Views
 
         protected override void Initialize()
         {
-            _boardModel = GameManager.Instance.BoardManager.BoardModel;
-
-            Redraw();
+            BoardModelChanged(GameManager.Instance.BoardManager.BoardModel);
         }
         protected override void UnInitialize()
         {
+            Clear();
         }
 
         protected override void Subscribe()
@@ -32,7 +31,24 @@ namespace Views
 
         private void Redraw()
         {
-            _squareViewInstances = new List<List<SquareView>>();
+            Clear();
+            Fill();
+        }
+
+        private void Clear()
+        {
+            for (var i = 0; i < _squareViewInstances.Count; i++)
+            {
+                for (var j = 0; j < _squareViewInstances[i].Count; j++)
+                {
+                    Destroy(_squareViewInstances[i][j]);
+                }
+            }
+
+            _squareViewInstances.Clear();
+        }
+        private void Fill()
+        {
             for (var i = 0; i < _boardModel.Squares.Count; i++)
             {
                 var squareViewsRow = new List<SquareView>();
@@ -48,7 +64,9 @@ namespace Views
 
         private void BoardModelChanged(BoardModel boardModel)
         {
+            _boardModel = GameManager.Instance.BoardManager.BoardModel;
 
+            Redraw();
         }
     }
 }
