@@ -7,6 +7,7 @@ namespace Managers
     [RequireComponent(typeof(BoardManager))]
     [RequireComponent(typeof(GameObjectsManager))]
     [RequireComponent(typeof(PiecesManager))]
+    [RequireComponent(typeof(ScoreManager))]
     public class GameManager : MonoBehaviour, IInitilizable
     {
         // static instance of GameManager which allows it to be accessed by any other script
@@ -16,6 +17,7 @@ namespace Managers
         public BoardManager BoardManager => this.gameObject.GetComponent<BoardManager>();
         public GameObjectsManager GameObjectsManager => this.gameObject.GetComponent<GameObjectsManager>();
         public PiecesManager PiecesManager => this.gameObject.GetComponent<PiecesManager>();
+        public ScoreManager ScoreManager => this.gameObject.GetComponent<ScoreManager>();
 
         private void Awake()
         {
@@ -43,6 +45,7 @@ namespace Managers
             BoardManager.Initialize();
             GameObjectsManager.Initialize();
             PiecesManager.Initialize();
+            ScoreManager.Initialize();
         }
     }
 }

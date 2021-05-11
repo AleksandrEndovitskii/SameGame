@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7306322849308396314}
   - component: {fileID: 477036741953595205}
   - component: {fileID: 6799263875346145196}
+  - component: {fileID: 6630504713707442612}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -105,3 +106,15 @@ MonoBehaviour:
   _colors:
   - {r: 1, g: 0, b: 0, a: 1}
   _piecePerColorCount: 1
+--- !u!114 &6630504713707442612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583358112190840174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50fc76ad2141dc91f9cc3823f1ab22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
