@@ -7,10 +7,16 @@ namespace Managers
     public class GameObjectsManager : MonoBehaviour, IInitilizable, IUnInitializeble
     {
         [SerializeField]
+        private BoardView _boardViewPrefab;
+        [SerializeField]
         private SquareView _squareViewPrefab;
+
+        private BoardView _boardViewInstance;
 
         public void Initialize()
         {
+            _boardViewInstance = CreateBoard();
+            _boardViewInstance.gameObject.transform.SetParent(GameManager.Instance.UserInterfaceManager.CanvasInstance.transform);
         }
         public void UnInitialize()
         {
@@ -20,6 +26,11 @@ namespace Managers
         {
             var squareViewInstance = Instantiate(_squareViewPrefab);
             return squareViewInstance;
+        }
+        public BoardView CreateBoard()
+        {
+            var boardViewInstance = Instantiate(_boardViewPrefab);
+            return boardViewInstance;
         }
     }
 }
