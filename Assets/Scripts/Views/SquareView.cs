@@ -72,22 +72,34 @@ namespace Views
         {
         }
 
-        private void PieceModelChanged(PieceModel pieceModel)
+        private void TryDestroyPieceView(PieceView pieceViewInstance)
         {
-            if (_pieceViewInstance != null)
-            {
-                Destroy(_pieceViewInstance.gameObject);
-                _pieceViewInstance = null;
-            }
-
-            if (pieceModel == null)
+            if (pieceViewInstance == null)
             {
                 return;
             }
 
-            _pieceViewInstance = GameManager.Instance.GameObjectsManager.CreatePiece(pieceModel);
-            _pieceViewInstance.gameObject.transform.SetParent(this.gameObject.transform);
-            _pieceViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            Destroy(pieceViewInstance.gameObject);
+        }
+        private PieceView TryCreatePieceView(PieceModel pieceModel)
+        {
+            if (pieceModel == null)
+            {
+                return null;
+            }
+
+            var pieceViewInstance = GameManager.Instance.GameObjectsManager.CreatePiece(pieceModel);
+            pieceViewInstance.gameObject.transform.SetParent(this.gameObject.transform);
+            pieceViewInstance.gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+            return pieceViewInstance;
+        }
+
+        private void PieceModelChanged(PieceModel pieceModel)
+        {
+            TryDestroyPieceView(_pieceViewInstance);
+
+            _pieceViewInstance = TryCreatePieceView(pieceModel);
         }
     }
 }

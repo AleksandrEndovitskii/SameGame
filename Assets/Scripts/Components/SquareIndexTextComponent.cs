@@ -14,11 +14,6 @@ namespace Components
 
         protected override void Initialize()
         {
-            if (_squareView == null)
-            {
-                return;
-            }
-
             _text = this.gameObject.GetComponent<TextMeshProUGUI>();
         }
         protected override void UnInitialize()
@@ -34,6 +29,14 @@ namespace Components
 
         private void Start()
         {
+            if (_squareView == null)
+            {
+                Debug.LogError($"{this.GetType().Name}.{nameof(Start)} aborted" +
+                               $"\n {nameof(_squareView)} == null");
+
+                return;
+            }
+
             // TODO: move this from Start to _squareView.IndexChanged subscription
             _text.text = _squareView.Index.ToString();
         }

@@ -1,6 +1,6 @@
 using System;
+using Managers;
 using UnityEngine;
-using Views;
 
 namespace Models
 {
@@ -42,6 +42,20 @@ namespace Models
         public SquareModel(Vector2 index)
         {
             _index = index;
+
+            GameManager.Instance.PiecesManager.PieceModelRemoved += PieceModelRemoved;
+        }
+
+        private void PieceModelRemoved(PieceModel pieceModel)
+        {
+            if (pieceModel != PieceModel)
+            {
+                return;
+            }
+
+            PieceModel = null;
+
+            Debug.Log("Score +1");
         }
     }
 }
