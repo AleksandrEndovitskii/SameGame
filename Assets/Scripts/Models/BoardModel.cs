@@ -1,26 +1,29 @@
 using System.Collections.Generic;
 
-public class BoardModel
+namespace Models
 {
-	public List<List<Square>> Squares => _squares;
-
-	private readonly List<List<Square>> _squares;
-
-	public BoardModel(int rowsCount, int cellsCount)
+	public class BoardModel
 	{
-		_squares = new List<List<Square>>();
-		PlaceSquaresOnBoard(_squares, rowsCount, cellsCount);
-	}
+		public List<List<Square>> Squares => _squares;
 
-	private void PlaceSquaresOnBoard(List<List<Square>> squares, int rowsCount, int cellsCount)
-	{
-		for (var i = 0; i < rowsCount; i++)
+		private readonly List<List<Square>> _squares;
+
+		public BoardModel(int rowsCount, int cellsCount)
 		{
-			var squaresRow = new List<Square>();
-			squares.Add(squaresRow);
-			for (var j = 0; j < cellsCount; j++)
+			_squares = new List<List<Square>>();
+			PlaceSquaresOnBoard(_squares, rowsCount, cellsCount);
+		}
+
+		private void PlaceSquaresOnBoard(List<List<Square>> squares, int rowsCount, int cellsCount)
+		{
+			for (var i = 0; i < rowsCount; i++)
 			{
-				squares[i].Add(new Square());
+				var squaresRow = new List<Square>();
+				squares.Add(squaresRow);
+				for (var j = 0; j < cellsCount; j++)
+				{
+					squares[i].Add(new Square());
+				}
 			}
 		}
 	}
