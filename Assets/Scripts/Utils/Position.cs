@@ -1,4 +1,4 @@
-namespace Models
+namespace Utils
 {
     public struct Position
     {

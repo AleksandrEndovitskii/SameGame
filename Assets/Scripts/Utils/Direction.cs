@@ -1,4 +1,4 @@
-namespace Managers
+namespace Utils
 {
     public enum Direction
     {

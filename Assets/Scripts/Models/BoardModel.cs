@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Managers;
 using UnityEngine;
+using Utils;
 
 namespace Models
 {

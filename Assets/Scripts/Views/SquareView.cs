@@ -4,6 +4,7 @@ using Managers;
 using Models;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
 namespace Views
 {
