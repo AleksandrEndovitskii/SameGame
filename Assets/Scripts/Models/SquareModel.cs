@@ -108,5 +108,30 @@ namespace Models
 
             PieceModel = null;
         }
+
+        public SquareModel GetConnectedSquareModelByDirection(MovementDirection movementDirection)
+        {
+            SquareModel result = null;
+
+            switch (movementDirection)
+            {
+                case MovementDirection.Top:
+                    result = Top;
+                    break;
+                case MovementDirection.Bot:
+                    result = Bot;
+                    break;
+                case MovementDirection.Left:
+                    result = Left;
+                    break;
+                case MovementDirection.Right:
+                    result = Right;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(movementDirection), movementDirection, null);
+            }
+
+            return result;
+        }
     }
 }
