@@ -33,7 +33,7 @@ namespace Managers
 
             PlacePieceModelsOnFreeSquares(_pieceModels);
 
-            GameManager.Instance.SelectionManager.SelectedObjectsChanged += SelectedObjectsChanged;
+            GameManager.Instance.SelectionManager.SelectedObjectsChanged += SelectionManagerOnSelectedObjectsChanged;
         }
 
         public void Add(PieceModel pieceModel)
@@ -106,7 +106,7 @@ namespace Managers
             }
         }
 
-        private void SelectedObjectsChanged(List<ISelectable> selectables)
+        private void SelectionManagerOnSelectedObjectsChanged(List<ISelectable> selectables)
         {
             Remove(selectables);
 

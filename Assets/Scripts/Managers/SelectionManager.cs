@@ -23,7 +23,6 @@ namespace Managers
 
         public void Initialize()
         {
-
         }
 
         public void Select(ISelectable selectable)
@@ -44,11 +43,11 @@ namespace Managers
 
             SelectedObjects.Add(selectable);
 
-            var squareModel = selectable as PieceModel;
+            var pieceModel = selectable as PieceModel;
 
             Debug.Log($"{this.GetType().Name}.{nameof(AddObjectToSelectedObjects)}" +
                       $"\n {nameof(SelectedObjects)}.{nameof(SelectedObjects.Count)} = {SelectedObjects.Count} " +
-                      $"{squareModel.SquareModel.Position}");
+                      $"{pieceModel.SquareModel.Position}");
 
             SelectableAdded.Invoke(selectable);
         }
