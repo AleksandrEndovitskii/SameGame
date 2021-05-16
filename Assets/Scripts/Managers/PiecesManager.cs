@@ -10,11 +10,20 @@ namespace Managers
     {
         public Action<PieceModel> PieceModelAdded = delegate {  };
         public Action<PieceModel> PieceModelRemoved = delegate {  };
+        public Action PieceModelsRemoved = delegate {  };
 
         [SerializeField]
         private List<Color> _colors = new List<Color>();
         [SerializeField]
         private int _piecePerColorCount;
+
+        public List<PieceModel> PieceModels
+        {
+            get
+            {
+                return _pieceModels;
+            }
+        }
 
         private List<PieceModel> _pieceModels = new List<PieceModel>();
 
@@ -53,6 +62,9 @@ namespace Managers
 
             _pieceModels.Remove(pieceModel);
 
+            pieceModel.SquareModel.PieceModel = null;
+            pieceModel.SquareModel = null;
+
             Debug.Log($"{this.GetType().Name}.{nameof(PieceModelRemoved)}");
 
             PieceModelRemoved.Invoke(pieceModel);
@@ -69,6 +81,8 @@ namespace Managers
 
                 Remove(pieceModel);
             }
+
+            PieceModelsRemoved.Invoke();
         }
 
         private void PlacePieceModelsOnFreeSquares(List<PieceModel> pieceModels)

@@ -32,6 +32,8 @@ namespace Models
                     _squareModel.PieceModel = this;
                 }
 
+                Debug.Log($"{this.GetType().Name}.{nameof(SquareModelChanged)}");
+
                 SquareModelChanged.Invoke(_squareModel);
             }
         }
