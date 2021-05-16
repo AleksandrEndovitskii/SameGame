@@ -33,14 +33,13 @@ namespace Components
 
             _pieceView.PieceModelChanged += PieceModelChanged;
         }
+        protected override void UnSubscribe()
+        {
+        }
 
         private void PieceModelChanged(PieceModel pieceModel)
         {
             _image.color = pieceModel.Color;
-        }
-
-        protected override void UnSubscribe()
-        {
         }
     }
 }
