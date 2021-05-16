@@ -23,6 +23,8 @@ namespace Managers
             CreatePieceModels();
 
             PlacePieceModelsOnFreeSquares(_pieceModels);
+
+            GameManager.Instance.SelectionManager.SelectedObjectsChanged += SelectedObjectsChanged;
         }
 
         public void Add(PieceModel pieceModel)
@@ -55,6 +57,19 @@ namespace Managers
 
             PieceModelRemoved.Invoke(pieceModel);
         }
+        private void Remove(List<ISelectable> selectables)
+        {
+            foreach (var selectable in selectables)
+            {
+                var pieceModel = selectable as PieceModel;
+                if (pieceModel == null)
+                {
+                    continue;
+                }
+
+                Remove(pieceModel);
+            }
+        }
 
         private void PlacePieceModelsOnFreeSquares(List<PieceModel> pieceModels)
         {
@@ -75,6 +90,13 @@ namespace Managers
                     Add(pieceModel);
                 }
             }
+        }
+
+        private void SelectedObjectsChanged(List<ISelectable> selectables)
+        {
+            Remove(selectables);
+
+            GameManager.Instance.SelectionManager.ClearSelectedObjects();
         }
     }
 }

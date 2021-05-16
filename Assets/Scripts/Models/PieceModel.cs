@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using Utils;
 
 namespace Models
 {
-    public class PieceModel
+    public class PieceModel: ISelectable
     {
         public Action<SquareModel> SquareModelChanged = delegate {  };
 
