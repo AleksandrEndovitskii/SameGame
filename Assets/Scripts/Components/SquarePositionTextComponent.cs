@@ -5,7 +5,7 @@ using Views;
 namespace Components
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
-    public class SquarePosotionTextComponent : BaseComponent
+    public class SquarePositionTextComponent : BaseComponent
     {
         [SerializeField]
         private SquareView _squareView;

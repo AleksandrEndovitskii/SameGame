@@ -119,7 +119,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 720159922352921768, guid: 8e4d69b96734c2646a31e2b57ada0481, type: 3}
       propertyPath: m_Name
-      value: SquarePositionText
+      value: SquarePisitionText
       objectReference: {fileID: 0}
     - target: {fileID: 4759004275575625739, guid: 8e4d69b96734c2646a31e2b57ada0481, type: 3}
       propertyPath: m_Pivot.x
