@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Managers;
 using UnityEngine;
 using Utils;
@@ -34,34 +35,38 @@ namespace Models
 
         private PieceModel _pieceModel;
 
-        public SquareModel Top;
-        public SquareModel Right;
-        public SquareModel Left;
-        public SquareModel Bot;
-
         private List<SquareModel> ConnectedSquareModels
         {
             get
             {
-                var result = new List<SquareModel>
-                {
-                    Top,
-                    Right,
-                    Left,
-                    Bot,
-                };
-                return result;
+                return _directionSquareModels.Values.ToList();
             }
         }
+
+        private Dictionary<Direction, SquareModel> _directionSquareModels = new Dictionary<Direction, SquareModel>();
 
         private Vector2 _index;
 
         public SquareModel(Vector2 index)
         {
+            _directionSquareModels.Add(Direction.Top,null);
+            _directionSquareModels.Add(Direction.Bot,null);
+            _directionSquareModels.Add(Direction.Left,null);
+            _directionSquareModels.Add(Direction.Right,null);
+
             _index = index;
 
             GameManager.Instance.PiecesManager.PieceModelRemoved += PieceModelRemoved;
             GameManager.Instance.SelectionManager.SelectableAdded += OnSelectableAdded;
+        }
+
+        public void SetConnectedSquareModel(Direction direction, SquareModel squareModel)
+        {
+            _directionSquareModels[direction] = squareModel;
+        }
+        public SquareModel GetConnectedSquareModel(Direction direction)
+        {
+            return _directionSquareModels[direction];
         }
 
         private void OnSelectableAdded(ISelectable selectable)
@@ -107,31 +112,6 @@ namespace Models
             }
 
             PieceModel = null;
-        }
-
-        public SquareModel GetConnectedSquareModelByDirection(MovementDirection movementDirection)
-        {
-            SquareModel result = null;
-
-            switch (movementDirection)
-            {
-                case MovementDirection.Top:
-                    result = Top;
-                    break;
-                case MovementDirection.Bot:
-                    result = Bot;
-                    break;
-                case MovementDirection.Left:
-                    result = Left;
-                    break;
-                case MovementDirection.Right:
-                    result = Right;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(movementDirection), movementDirection, null);
-            }
-
-            return result;
         }
     }
 }

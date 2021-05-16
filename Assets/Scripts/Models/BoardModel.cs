@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 namespace Models
@@ -37,20 +38,20 @@ namespace Models
 				{
 					if (i != squareModels[i].Count - 1)
 					{
-						squareModels[i][j].Top = squareModels[i + 1][j];
+						squareModels[i][j].SetConnectedSquareModel(Direction.Top ,squareModels[i + 1][j]);
 					}
 					if (i != 0)
 					{
-						squareModels[i][j].Bot = squareModels[i - 1][j];
+						squareModels[i][j].SetConnectedSquareModel(Direction.Bot ,squareModels[i - 1][j]);
 					}
 
 					if (j != 0)
 					{
-						squareModels[i][j].Left = squareModels[i][j - 1];
+						squareModels[i][j].SetConnectedSquareModel(Direction.Left ,squareModels[i][j - 1]);
 					}
 					if (j != squareModels[i].Count - 1)
 					{
-						squareModels[i][j].Right = squareModels[i][j + 1];
+						squareModels[i][j].SetConnectedSquareModel(Direction.Right ,squareModels[i][j + 1]);
 					}
 				}
 			}

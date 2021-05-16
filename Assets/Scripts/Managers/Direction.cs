@@ -1,6 +1,6 @@
 namespace Managers
 {
-    public enum MovementDirection
+    public enum Direction
     {
         Top,
         Bot,
