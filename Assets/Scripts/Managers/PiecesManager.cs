@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models;
 using UnityEngine;
 using Utils;
+using Random = System.Random;
 
 namespace Managers
 {
@@ -14,8 +15,6 @@ namespace Managers
 
         [SerializeField]
         private List<Color> _colors = new List<Color>();
-        [SerializeField]
-        private int _piecePerColorCount;
 
         public List<PieceModel> PieceModels
         {
@@ -26,6 +25,7 @@ namespace Managers
         }
 
         private List<PieceModel> _pieceModels = new List<PieceModel>();
+        private Random _random = new Random();
 
         public void Initialize()
         {
@@ -96,11 +96,15 @@ namespace Managers
 
         private void CreatePieceModels()
         {
-            foreach (var color in _colors)
+            // TODO: will just iterate for all squares and create equivalent amount of pieces
+            // TODO: probably can be optimized
+            foreach (var squareModels in GameManager.Instance.BoardManager.BoardModel.SquareModels)
             {
-                for (var i = 0; i < _piecePerColorCount; i++)
+                foreach (var squareModel in squareModels)
                 {
-                    var pieceModel = new PieceModel(color);
+                    var randomColorIndex = _random.Next(0, _colors.Count);
+                    var randomColor = _colors[randomColorIndex];
+                    var pieceModel = new PieceModel(randomColor);
                     Add(pieceModel);
                 }
             }
