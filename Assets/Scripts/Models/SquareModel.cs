@@ -7,7 +7,7 @@ using Utils;
 
 namespace Models
 {
-    public partial class SquareModel
+    public class SquareModel
     {
         public Action<PieceModel> PieceModelChanged = delegate {  };
 
@@ -33,8 +33,8 @@ namespace Models
             }
         }
 
+        private readonly Position _position;
         private PieceModel _pieceModel;
-
         private List<SquareModel> ConnectedSquareModels
         {
             get
@@ -42,10 +42,7 @@ namespace Models
                 return _directionSquareModels.Values.ToList();
             }
         }
-
         private Dictionary<Direction, SquareModel> _directionSquareModels = new Dictionary<Direction, SquareModel>();
-
-        private Position _position;
 
         public SquareModel(Position position)
         {
@@ -56,8 +53,8 @@ namespace Models
 
             _position = position;
 
-            GameManager.Instance.PiecesManager.PieceModelRemoved += PieceModelRemoved;
-            GameManager.Instance.SelectionManager.SelectableAdded += OnSelectableAdded;
+            GameManager.Instance.PiecesManager.PieceModelRemoved += PiecesManagerOnPieceModelRemoved;
+            GameManager.Instance.SelectionManager.SelectableAdded += SelectionManagerOnSelectableAdded;
         }
 
         public void SetConnectedSquareModel(Direction direction, SquareModel squareModel)
@@ -69,7 +66,7 @@ namespace Models
             return _directionSquareModels[direction];
         }
 
-        private void OnSelectableAdded(ISelectable selectable)
+        private void SelectionManagerOnSelectableAdded(ISelectable selectable)
         {
             if (PieceModel == null)
             {
@@ -103,8 +100,7 @@ namespace Models
                 GameManager.Instance.SelectionManager.AddObjectToSelectedObjects(connectedSquareModel.PieceModel);
             }
         }
-
-        private void PieceModelRemoved(PieceModel pieceModel)
+        private void PiecesManagerOnPieceModelRemoved(PieceModel pieceModel)
         {
             if (pieceModel != PieceModel)
             {
