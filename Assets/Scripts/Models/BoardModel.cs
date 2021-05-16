@@ -24,7 +24,8 @@ namespace Models
 				squareModels.Add(squaresRow);
 				for (var j = 0; j < cellsCount; j++)
 				{
-					squareModels[i].Add(new SquareModel(new Vector2(i, j)));
+					var vector2 = new Vector2(i, j);
+					squareModels[i].Add(new SquareModel(vector2));
 				}
 			}
 		}
@@ -34,13 +35,13 @@ namespace Models
 			{
 				for (var j = 0; j < squareModels[i].Count; j++)
 				{
-					if (i != 0)
-					{
-						squareModels[i][j].Top = squareModels[i - 1][j];
-					}
 					if (i != squareModels[i].Count - 1)
 					{
-						squareModels[i][j].Bot = squareModels[i + 1][j];
+						squareModels[i][j].Top = squareModels[i + 1][j];
+					}
+					if (i != 0)
+					{
+						squareModels[i][j].Bot = squareModels[i - 1][j];
 					}
 
 					if (j != 0)
