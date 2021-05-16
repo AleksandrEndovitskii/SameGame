@@ -18,7 +18,7 @@ namespace Views
 
         protected override void Initialize()
         {
-            BoardModelChanged(GameManager.Instance.BoardManager.BoardModel);
+            BoardManagerOnBoardModelChanged(GameManager.Instance.BoardManager.BoardModel);
         }
         protected override void UnInitialize()
         {
@@ -27,7 +27,7 @@ namespace Views
 
         protected override void Subscribe()
         {
-            GameManager.Instance.BoardManager.BoardModelChanged += BoardModelChanged;
+            GameManager.Instance.BoardManager.BoardModelChanged += BoardManagerOnBoardModelChanged;
         }
         protected override void UnSubscribe()
         {
@@ -110,7 +110,7 @@ namespace Views
             }));
         }
 
-        private void BoardModelChanged(BoardModel boardModel)
+        private void BoardManagerOnBoardModelChanged(BoardModel boardModel)
         {
             _boardModel = GameManager.Instance.BoardManager.BoardModel;
 

@@ -30,27 +30,23 @@ namespace Views
 
                 if (_squareModel != null)
                 {
-                    _squareModel.PieceModelChanged -= PieceModelChanged;
+                    _squareModel.PieceModelChanged -= SquareModelOnPieceModelChanged;
                 }
                 _squareModel = value;
                 if (_squareModel != null)
                 {
-                    _squareModel.PieceModelChanged += PieceModelChanged;
+                    _squareModel.PieceModelChanged += SquareModelOnPieceModelChanged;
                 }
 
                 SquareModelChanged.Invoke(_squareModel);
             }
         }
-
         public float Width => _layoutElement.preferredWidth;
         public float Height => _layoutElement.preferredHeight;
-
         public Position Position => SquareModel.Position;
 
         private LayoutElement _layoutElement;
-
         private SquareModel _squareModel;
-
         private PieceView _pieceViewInstance;
 
         public void Initialize(SquareModel squareModel)
@@ -96,7 +92,7 @@ namespace Views
             return pieceViewInstance;
         }
 
-        private void PieceModelChanged(PieceModel pieceModel)
+        private void SquareModelOnPieceModelChanged(PieceModel pieceModel)
         {
             TryDestroyPieceView(_pieceViewInstance);
 
