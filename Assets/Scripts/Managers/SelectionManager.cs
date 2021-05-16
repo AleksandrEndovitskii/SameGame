@@ -48,7 +48,7 @@ namespace Managers
 
             Debug.Log($"{this.GetType().Name}.{nameof(AddObjectToSelectedObjects)}" +
                       $"\n {nameof(SelectedObjects)}.{nameof(SelectedObjects.Count)} = {SelectedObjects.Count} " +
-                      $"{squareModel.SquareModel.Index}");
+                      $"{squareModel.SquareModel.Position}");
 
             SelectableAdded.Invoke(selectable);
         }

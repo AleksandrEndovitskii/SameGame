@@ -5,7 +5,7 @@ using Views;
 namespace Components
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
-    public class SquareIndexTextComponent : BaseComponent
+    public class SquarePosotionTextComponent : BaseComponent
     {
         [SerializeField]
         private SquareView _squareView;
@@ -38,7 +38,7 @@ namespace Components
             }
 
             // TODO: move this from Start to _squareView.IndexChanged subscription
-            _text.text = _squareView.Index.ToString();
+            _text.text = _squareView.Position.ToString();
         }
     }
 }

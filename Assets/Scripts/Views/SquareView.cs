@@ -44,7 +44,7 @@ namespace Views
         public float Width => _layoutElement.preferredWidth;
         public float Height => _layoutElement.preferredHeight;
 
-        public Vector2 Index => SquareModel.Index;
+        public Position Position => SquareModel.Position;
 
         private LayoutElement _layoutElement;
 

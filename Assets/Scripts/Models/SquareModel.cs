@@ -7,11 +7,11 @@ using Utils;
 
 namespace Models
 {
-    public class SquareModel
+    public partial class SquareModel
     {
         public Action<PieceModel> PieceModelChanged = delegate {  };
 
-        public Vector2 Index => _index;
+        public Position Position => _position;
         public PieceModel PieceModel
         {
             get
@@ -45,16 +45,16 @@ namespace Models
 
         private Dictionary<Direction, SquareModel> _directionSquareModels = new Dictionary<Direction, SquareModel>();
 
-        private Vector2 _index;
+        private Position _position;
 
-        public SquareModel(Vector2 index)
+        public SquareModel(Position position)
         {
             _directionSquareModels.Add(Direction.Top,null);
             _directionSquareModels.Add(Direction.Bot,null);
             _directionSquareModels.Add(Direction.Left,null);
             _directionSquareModels.Add(Direction.Right,null);
 
-            _index = index;
+            _position = position;
 
             GameManager.Instance.PiecesManager.PieceModelRemoved += PieceModelRemoved;
             GameManager.Instance.SelectionManager.SelectableAdded += OnSelectableAdded;

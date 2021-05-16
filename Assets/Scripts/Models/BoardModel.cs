@@ -25,8 +25,8 @@ namespace Models
 				squareModels.Add(squaresRow);
 				for (var j = 0; j < cellsCount; j++)
 				{
-					var vector2 = new Vector2(i, j);
-					squareModels[i].Add(new SquareModel(vector2));
+					var position = new Position(i, j);
+					squareModels[i].Add(new SquareModel(position));
 				}
 			}
 		}
