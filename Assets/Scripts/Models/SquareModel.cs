@@ -32,16 +32,44 @@ namespace Models
                 PieceModelChanged.Invoke(_pieceModel);
             }
         }
-
-        private readonly Position _position;
-        private PieceModel _pieceModel;
-        private List<SquareModel> ConnectedSquareModels
+        public List<SquareModel> ConnectedSquareModels
         {
             get
             {
                 return _directionSquareModels.Values.ToList();
             }
         }
+        public List<SquareModel> ConnectedSquareModelsOfTheSameColor
+        {
+            get
+            {
+                var connectedSquareModels = new List<SquareModel>();
+                foreach (var connectedSquareModel in ConnectedSquareModels)
+                {
+                    if (connectedSquareModel == null)
+                    {
+                        continue;
+                    }
+
+                    if (connectedSquareModel.PieceModel == null)
+                    {
+                        continue;
+                    }
+
+                    if (connectedSquareModel.PieceModel.Color != PieceModel.Color)
+                    {
+                        continue;
+                    }
+
+                    connectedSquareModels.Add(connectedSquareModel);
+                }
+
+                return connectedSquareModels;
+            }
+        }
+
+        private readonly Position _position;
+        private PieceModel _pieceModel;
         private Dictionary<Direction, SquareModel> _directionSquareModels = new Dictionary<Direction, SquareModel>();
 
         public SquareModel(Position position)
@@ -82,21 +110,10 @@ namespace Models
                 return;
             }
 
-            foreach (var connectedSquareModel in ConnectedSquareModels)
-            {
-                if (connectedSquareModel == null)
-                {
-                    continue;
-                }
-                if (connectedSquareModel.PieceModel == null)
-                {
-                    continue;
-                }
-                if (connectedSquareModel.PieceModel.Color != PieceModel.Color)
-                {
-                    continue;
-                }
+            var connectedSquareModels = ConnectedSquareModelsOfTheSameColor;
 
+            foreach (var connectedSquareModel in connectedSquareModels)
+            {
                 GameManager.Instance.SelectionManager.AddObjectToSelectedObjects(connectedSquareModel.PieceModel);
             }
         }
