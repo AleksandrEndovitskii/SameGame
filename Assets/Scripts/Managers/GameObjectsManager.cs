@@ -8,18 +8,23 @@ namespace Managers
     public class GameObjectsManager : MonoBehaviour, IInitilizable, IUnInitializeble
     {
         [SerializeField]
+        private Canvas _canvasPrefab;
+        [SerializeField]
         private BoardView _boardViewPrefab;
         [SerializeField]
         private SquareView _squareViewPrefab;
         [SerializeField]
         private PieceView _pieceViewPrefab;
 
+        private Canvas _canvasInstance;
         private BoardView _boardViewInstance;
 
         public void Initialize()
         {
+            _canvasInstance = Instantiate(_canvasPrefab);
+
             _boardViewInstance = CreateBoard();
-            _boardViewInstance.gameObject.transform.SetParent(GameManager.Instance.UserInterfaceManager.CanvasInstance.transform);
+            _boardViewInstance.gameObject.transform.SetParent(_canvasInstance.transform);
 
             RedrawCompleted();
             _boardViewInstance.RedrawCompleted += RedrawCompleted;

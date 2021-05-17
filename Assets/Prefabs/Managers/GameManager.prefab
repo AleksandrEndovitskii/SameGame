@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2551b5de83dd40a7932faa3e58526f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasPrefab: {fileID: 4552370098517156293, guid: 509b28c01db7404499c0f63548d9f169, type: 3}
   _boardViewPrefab: {fileID: -3522549316008995068, guid: 6c902be91542331438a7e4cfbbf89cad, type: 3}
   _squareViewPrefab: {fileID: -5566016592281480407, guid: a005c35daf087344181e304cd7493581, type: 3}
   _pieceViewPrefab: {fileID: -6108238059475710485, guid: b7b581e4ad035a44ebc2124321435951, type: 3}

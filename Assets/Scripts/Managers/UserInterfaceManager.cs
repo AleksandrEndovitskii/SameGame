@@ -12,10 +12,8 @@ namespace Managers
         [SerializeField]
         private EventSystem _eventSystemPrefab;
 
-        [NonSerialized]
-        public Canvas CanvasInstance;
-        [NonSerialized]
-        public EventSystem EventSystemInstance;
+        private Canvas CanvasInstance;
+        private EventSystem EventSystemInstance;
 
         public void Initialize()
         {

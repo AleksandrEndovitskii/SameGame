@@ -3,9 +3,9 @@ using Utils;
 
 namespace Managers
 {
-    [RequireComponent(typeof(UserInterfaceManager))]
     [RequireComponent(typeof(BoardManager))]
     [RequireComponent(typeof(GameObjectsManager))]
+    [RequireComponent(typeof(UserInterfaceManager))]
     [RequireComponent(typeof(PiecesManager))]
     [RequireComponent(typeof(ScoreManager))]
     [RequireComponent(typeof(SelectionManager))]
@@ -16,9 +16,9 @@ namespace Managers
         // static instance of GameManager which allows it to be accessed by any other script
         public static GameManager Instance;
 
-        public UserInterfaceManager UserInterfaceManager => this.gameObject.GetComponent<UserInterfaceManager>();
         public BoardManager BoardManager => this.gameObject.GetComponent<BoardManager>();
         public GameObjectsManager GameObjectsManager => this.gameObject.GetComponent<GameObjectsManager>();
+        public UserInterfaceManager UserInterfaceManager => this.gameObject.GetComponent<UserInterfaceManager>();
         public PiecesManager PiecesManager => this.gameObject.GetComponent<PiecesManager>();
         public ScoreManager ScoreManager => this.gameObject.GetComponent<ScoreManager>();
         public SelectionManager SelectionManager => this.gameObject.GetComponent<SelectionManager>();
@@ -47,9 +47,9 @@ namespace Managers
 
         public void Initialize()
         {
-            UserInterfaceManager.Initialize();
             BoardManager.Initialize();
             GameObjectsManager.Initialize();
+            UserInterfaceManager.Initialize();
             PiecesManager.Initialize();
             ScoreManager.Initialize();
             SelectionManager.Initialize();
