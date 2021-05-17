@@ -11,7 +11,7 @@ namespace Managers
     {
         public Action<PieceModel> PieceModelAdded = delegate {  };
         public Action<PieceModel> PieceModelRemoved = delegate {  };
-        public Action PieceModelsRemoved = delegate {  };
+        public Action<List<PieceModel>> PieceModelsRemoved = delegate {  };
 
         [SerializeField]
         private List<Color> _colors = new List<Color>();
@@ -71,6 +71,7 @@ namespace Managers
         }
         private void Remove(List<ISelectable> selectables)
         {
+            var pieceModels = new List<PieceModel>();
             foreach (var selectable in selectables)
             {
                 var pieceModel = selectable as PieceModel;
@@ -79,10 +80,15 @@ namespace Managers
                     continue;
                 }
 
+                pieceModels.Add(pieceModel);
+            }
+
+            foreach (var pieceModel in pieceModels)
+            {
                 Remove(pieceModel);
             }
 
-            PieceModelsRemoved.Invoke();
+            PieceModelsRemoved.Invoke(pieceModels);
         }
 
         private void PlacePieceModelsOnFreeSquares(List<PieceModel> pieceModels)

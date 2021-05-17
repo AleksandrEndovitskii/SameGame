@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Models;
 using UnityEngine;
 using Utils;
@@ -35,12 +36,12 @@ namespace Managers
 
         public void Initialize()
         {
-            GameManager.Instance.PiecesManager.PieceModelRemoved += PieceModelRemoved;
+            GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
         }
 
-        private void PieceModelRemoved(PieceModel pieceModel)
+        private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)
         {
-            Score++;
+            Score += pieceModels.Count;
         }
     }
 }

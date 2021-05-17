@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using Models;
 using UnityEngine;
 using Utils;
 
@@ -14,7 +16,7 @@ namespace Managers
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
         }
 
-        private void PiecesManagerOnPieceModelsRemoved()
+        private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)
         {
             TryMovePieceModelsRecursively(Direction.Bot);
             TryMovePieceModelsRecursively(direction);
