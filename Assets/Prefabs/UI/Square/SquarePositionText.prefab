@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a221cd671eee9e4ca8436584534db6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _squareView: {fileID: 0}
 --- !u!1001 &8745583945389411417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,12 +105,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6309774274087712225, guid: fce965b43fc7cbf458de611ae95d7af1, type: 3}
+      propertyPath: m_fontSize
+      value: 54
+      objectReference: {fileID: 0}
+    - target: {fileID: 6309774274087712225, guid: fce965b43fc7cbf458de611ae95d7af1, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 6309774274087712225, guid: fce965b43fc7cbf458de611ae95d7af1, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 54
+      objectReference: {fileID: 0}
     - target: {fileID: 8115499591179833585, guid: fce965b43fc7cbf458de611ae95d7af1, type: 3}
       propertyPath: m_Name
-      value: Text
+      value: SquarePositionText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fce965b43fc7cbf458de611ae95d7af1, type: 3}
