@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0e1a54177470e4a9e243501522eeb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rowsCount: 10
-  _cellsCount: 10
+  _rowsCount: 4
+  _cellsCount: 8
 --- !u!114 &7306322849308396314
 MonoBehaviour:
   m_ObjectHideFlags: 0

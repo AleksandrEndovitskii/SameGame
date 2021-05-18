@@ -55,16 +55,16 @@ namespace Views
         }
         private void Fill()
         {
-            for (var i = 0; i < _boardModel.SquareModels.Count; i++)
+            for (var rowsIndex = 0; rowsIndex < _boardModel.SquareModels.Count; rowsIndex++)
             {
                 var squareViewsRow = new List<SquareView>();
                 _squareViewInstances.Add(squareViewsRow);
-                for (var j = 0; j < _boardModel.SquareModels[i].Count; j++)
+                for (var cellIndex = 0; cellIndex < _boardModel.SquareModels[rowsIndex].Count; cellIndex++)
                 {
-                    var squareModel = _boardModel.SquareModels[j][i];
+                    var squareModel = _boardModel.SquareModels[rowsIndex][cellIndex];
                     var squareViewInstance = GameManager.Instance.GameObjectsManager.CreateSquare(squareModel);
                     squareViewInstance.gameObject.transform.SetParent(this.gameObject.transform);
-                    _squareViewInstances[i].Add(squareViewInstance);
+                    _squareViewInstances[rowsIndex].Add(squareViewInstance);
                 }
             }
         }

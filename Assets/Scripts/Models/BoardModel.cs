@@ -18,39 +18,39 @@ namespace Models
 
 		private void PlaceSquaresOnBoard(List<List<SquareModel>> squareModels, int rowsCount, int cellsCount)
 		{
-			for (var i = 0; i < rowsCount; i++)
+			for (var rowsIndex = 0; rowsIndex < rowsCount; rowsIndex++)
 			{
 				var squaresRow = new List<SquareModel>();
 				squareModels.Add(squaresRow);
-				for (var j = 0; j < cellsCount; j++)
+				for (var cellIndex = 0; cellIndex < cellsCount; cellIndex++)
 				{
-					var position = new Position(i, j);
-					squareModels[i].Add(new SquareModel(position));
+					var position = new Position(rowsIndex, cellIndex);
+					squareModels[rowsIndex].Add(new SquareModel(position));
 				}
 			}
 		}
 		private void LinkSquaresOnBoard(List<List<SquareModel>> squareModels)
 		{
-			for (var i = 0; i < squareModels.Count; i++)
+			for (var rowsIndex = 0; rowsIndex < squareModels.Count; rowsIndex++)
 			{
-				for (var j = 0; j < squareModels[i].Count; j++)
+				for (var cellIndex = 0; cellIndex < squareModels[rowsIndex].Count; cellIndex++)
 				{
-					if (i != squareModels[i].Count - 1)
+					if (cellIndex < squareModels[rowsIndex].Count - 1)
 					{
-						squareModels[i][j].SetConnectedSquareModel(Direction.Top ,squareModels[i + 1][j]);
+						squareModels[rowsIndex][cellIndex].SetConnectedSquareModel(Direction.Top, squareModels[rowsIndex][cellIndex + 1]);
 					}
-					if (i != 0)
+					if (cellIndex > 0)
 					{
-						squareModels[i][j].SetConnectedSquareModel(Direction.Bot ,squareModels[i - 1][j]);
+						squareModels[rowsIndex][cellIndex].SetConnectedSquareModel(Direction.Bot, squareModels[rowsIndex][cellIndex - 1]);
 					}
 
-					if (j != 0)
+					if (rowsIndex > 0)
 					{
-						squareModels[i][j].SetConnectedSquareModel(Direction.Left ,squareModels[i][j - 1]);
+						squareModels[rowsIndex][cellIndex].SetConnectedSquareModel(Direction.Left, squareModels[rowsIndex - 1][cellIndex]);
 					}
-					if (j != squareModels[i].Count - 1)
+					if (rowsIndex < squareModels.Count - 1)
 					{
-						squareModels[i][j].SetConnectedSquareModel(Direction.Right ,squareModels[i][j + 1]);
+						squareModels[rowsIndex][cellIndex].SetConnectedSquareModel(Direction.Right, squareModels[rowsIndex + 1][cellIndex]);
 					}
 				}
 			}
