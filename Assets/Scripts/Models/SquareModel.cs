@@ -109,10 +109,12 @@ namespace Models
             {
                 return;
             }
+            if (ConnectedSquareModelsOfTheSameColor.Count < 1)
+            {
+                return;
+            }
 
-            var connectedSquareModels = ConnectedSquareModelsOfTheSameColor;
-
-            foreach (var connectedSquareModel in connectedSquareModels)
+            foreach (var connectedSquareModel in ConnectedSquareModelsOfTheSameColor)
             {
                 GameManager.Instance.SelectionManager.AddObjectToSelectedObjects(connectedSquareModel.PieceModel);
             }

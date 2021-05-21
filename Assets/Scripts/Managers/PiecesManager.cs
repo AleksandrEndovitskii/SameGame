@@ -118,6 +118,11 @@ namespace Managers
 
         private void SelectionManagerOnSelectedObjectsChanged(List<ISelectable> selectables)
         {
+            if (selectables.Count < 2)
+            {
+                return;
+            }
+
             Remove(selectables);
 
             GameManager.Instance.SelectionManager.ClearSelectedObjects();

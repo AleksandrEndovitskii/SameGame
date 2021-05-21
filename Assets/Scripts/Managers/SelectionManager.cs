@@ -27,6 +27,8 @@ namespace Managers
 
         public void Select(ISelectable selectable)
         {
+            ClearSelectedObjects();
+
             AddObjectToSelectedObjects(selectable);
 
             Debug.Log($"{this.GetType().Name}.{nameof(SelectedObjectsChanged)}" +
