@@ -1,7 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Managers;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -9,29 +10,9 @@ namespace Models
 {
     public class SquareModel
     {
-        public Action<PieceModel> PieceModelChanged = delegate {  };
-
         public Position Position => _position;
-        public PieceModel PieceModel
-        {
-            get
-            {
-                return _pieceModel;
-            }
-            set
-            {
-                if (_pieceModel == value)
-                {
-                    return;
-                }
+        public ReactiveProperty<PieceModel> PieceModel = new ReactiveProperty<PieceModel>();
 
-                Debug.Log($"{this.GetType().Name}.{nameof(PieceModelChanged)}");
-
-                _pieceModel = value;
-
-                PieceModelChanged.Invoke(_pieceModel);
-            }
-        }
         public List<SquareModel> ConnectedSquareModels
         {
             get
@@ -56,7 +37,7 @@ namespace Models
                         continue;
                     }
 
-                    if (connectedSquareModel.PieceModel.Color != PieceModel.Color)
+                    if (connectedSquareModel.PieceModel.Value.Color != PieceModel.Value.Color)
                     {
                         continue;
                     }
@@ -69,11 +50,12 @@ namespace Models
         }
 
         private readonly Position _position;
-        private PieceModel _pieceModel;
         private Dictionary<Direction, SquareModel> _directionSquareModels = new Dictionary<Direction, SquareModel>();
 
         public SquareModel(Position position)
         {
+            Debug.Log($"{GetType().Name} initialization started");
+
             _directionSquareModels.Add(Direction.Top,null);
             _directionSquareModels.Add(Direction.Bot,null);
             _directionSquareModels.Add(Direction.Left,null);
@@ -83,6 +65,10 @@ namespace Models
 
             GameManager.Instance.PiecesManager.PieceModelRemoved += PiecesManagerOnPieceModelRemoved;
             GameManager.Instance.SelectionManager.SelectableAdded += SelectionManagerOnSelectableAdded;
+
+            PieceModel.Subscribe(PieceModelOnChanged);
+
+            Debug.Log($"{GetType().Name} initialization finished");
         }
 
         public void SetConnectedSquareModel(Direction direction, SquareModel squareModel)
@@ -105,7 +91,7 @@ namespace Models
             {
                 return;
             }
-            if (pieceModel != PieceModel)
+            if (pieceModel != PieceModel.Value)
             {
                 return;
             }
@@ -116,17 +102,21 @@ namespace Models
 
             foreach (var connectedSquareModel in ConnectedSquareModelsOfTheSameColor)
             {
-                GameManager.Instance.SelectionManager.AddObjectToSelectedObjects(connectedSquareModel.PieceModel);
+                GameManager.Instance.SelectionManager.AddObjectToSelectedObjects(connectedSquareModel.PieceModel.Value);
             }
         }
         private void PiecesManagerOnPieceModelRemoved(PieceModel pieceModel)
         {
-            if (pieceModel != PieceModel)
+            if (pieceModel != PieceModel.Value)
             {
                 return;
             }
 
             PieceModel = null;
+        }
+        private void PieceModelOnChanged(PieceModel pieceModel)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
         }
     }
 }

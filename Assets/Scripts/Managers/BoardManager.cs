@@ -46,8 +46,8 @@ namespace Managers
         public SquareModel GetFreeSquareModel()
         {
             var squareModelsRowWithFreeSquare =
-                BoardModel.SquareModels.FirstOrDefault(x => x.Any(y => y.PieceModel == null));
-            var freeSquareModel = squareModelsRowWithFreeSquare?.FirstOrDefault(x => x.PieceModel == null);
+                BoardModel.SquareModels.FirstOrDefault(x => x.Any(y => y.PieceModel.Value == null));
+            var freeSquareModel = squareModelsRowWithFreeSquare?.FirstOrDefault(x => x.PieceModel.Value == null);
 
             return freeSquareModel;
         }

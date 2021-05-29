@@ -62,7 +62,7 @@ namespace Managers
 
             _pieceModels.Remove(pieceModel);
 
-            pieceModel.SquareModel.PieceModel = null;
+            pieceModel.SquareModel.PieceModel.Value = null;
             pieceModel.SquareModel = null;
 
             Debug.Log($"{this.GetType().Name}.{nameof(PieceModelRemoved)}");

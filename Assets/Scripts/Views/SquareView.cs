@@ -3,6 +3,7 @@ using Components;
 using Helpers;
 using Managers;
 using Models;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -32,12 +33,13 @@ namespace Views
 
                 if (_squareModel != null)
                 {
-                    _squareModel.PieceModelChanged -= SquareModelOnPieceModelChanged;
+                    _squareModelOnPieceModelChangedSubscribtion?.Dispose();
                 }
                 _squareModel = value;
                 if (_squareModel != null)
                 {
-                    _squareModel.PieceModelChanged += SquareModelOnPieceModelChanged;
+                    _squareModelOnPieceModelChangedSubscribtion =
+                        _squareModel.PieceModel.Subscribe(SquareModelOnPieceModelChanged);
                 }
 
                 SquareModelChanged.Invoke(_squareModel);
@@ -50,6 +52,7 @@ namespace Views
         private LayoutElement _layoutElement;
         private SquareModel _squareModel;
         private PieceView _pieceViewInstance;
+        private IDisposable _squareModelOnPieceModelChangedSubscribtion;
 
         public void Initialize(SquareModel squareModel)
         {

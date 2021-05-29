@@ -26,7 +26,7 @@ namespace Managers
         {
             var botPieceModels = GameManager.Instance.PiecesManager.PieceModels.Where(x =>
                 x.SquareModel.GetConnectedSquareModel(direction) != null &&
-                x.SquareModel.GetConnectedSquareModel(direction).PieceModel == null).ToList();
+                x.SquareModel.GetConnectedSquareModel(direction).PieceModel.Value == null).ToList();
             Debug.Log($"{nameof(botPieceModels)}.{nameof(botPieceModels.Count)} = {botPieceModels.Count}");
             if (botPieceModels.Count == 0)
             {

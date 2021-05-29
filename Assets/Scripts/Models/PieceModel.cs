@@ -28,12 +28,12 @@ namespace Models
 
                 if (_squareModel != null)
                 {
-                    _squareModel.PieceModel = null;
+                    _squareModel.PieceModel.Value = null;
                 }
                 _squareModel = value;
                 if (_squareModel != null)
                 {
-                    _squareModel.PieceModel = this;
+                    _squareModel.PieceModel.Value = this;
                 }
 
                 SquareModelChanged.Invoke(_squareModel);
