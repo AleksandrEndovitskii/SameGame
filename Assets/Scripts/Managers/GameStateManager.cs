@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Models;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -9,36 +10,15 @@ namespace Managers
 {
     public class GameStateManager : MonoBehaviour, IInitilizable
     {
-        public Action<GameState> GameStateChanged = delegate {  };
-
-        public GameState GameState
-        {
-            get
-            {
-                return _gameState;
-            }
-            set
-            {
-                if (_gameState == value)
-                {
-                    return;
-                }
-
-                Debug.Log($"{this.GetType().Name}.{nameof(GameStateChanged)}" +
-                          $"\n {_gameState}->{value}");
-
-                _gameState = value;
-
-                GameStateChanged.Invoke(_gameState);
-            }
-        }
+        public ReactiveProperty<GameState> GameState = new ReactiveProperty<GameState>();
 
         private GameState _gameState;
 
         public void Initialize()
         {
-            GameState = GameState.InProgress;
+            GameState.Value = Utils.GameState.InProgress;
 
+            GameState.Subscribe(PieceModelOnChanged);
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
         }
 
@@ -46,7 +26,7 @@ namespace Managers
         {
             if (GameManager.Instance.PiecesManager.PieceModels.Count == 0)
             {
-                GameState = GameState.Win;
+                GameState.Value = Utils.GameState.Win;
 
                 return;
             }
@@ -56,10 +36,14 @@ namespace Managers
                     x.SquareModel.ConnectedSquareModelsOfTheSameColor.Count >= 1).ToList();
             if (pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor.Count == 0)
             {
-                GameState = GameState.Loss;
+                GameState.Value = Utils.GameState.Loss;
 
                 return;
             }
+        }
+        private void PieceModelOnChanged(GameState gameState)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
         }
     }
 }

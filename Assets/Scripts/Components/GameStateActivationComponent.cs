@@ -1,4 +1,6 @@
+using System;
 using Managers;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -9,9 +11,11 @@ namespace Components
         [SerializeField]
         private GameState _gameState;
 
+        private IDisposable _gameStateManagerOnGameStateChangedSubscription;
+
         protected override void Initialize()
         {
-            Redraw(GameManager.Instance.GameStateManager.GameState);
+            Redraw(GameManager.Instance.GameStateManager.GameState.Value);
         }
         protected override void UnInitialize()
         {
@@ -19,10 +23,11 @@ namespace Components
 
         protected override void Subscribe()
         {
-            GameManager.Instance.GameStateManager.GameStateChanged += GameStateManagerOnGameStateChanged;
+            _gameStateManagerOnGameStateChangedSubscription = GameManager.Instance.GameStateManager.GameState.Subscribe(GameStateManagerOnGameStateChanged);
         }
         protected override void UnSubscribe()
         {
+            _gameStateManagerOnGameStateChangedSubscription?.Dispose();
         }
 
         private void Redraw(GameState gameState)
