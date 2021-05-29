@@ -1,5 +1,6 @@
 using System;
 using Components;
+using Helpers;
 using Managers;
 using Models;
 using UnityEngine;
@@ -26,7 +27,8 @@ namespace Views
                     return;
                 }
 
-                Debug.Log($"{this.GetType().Name}.{nameof(SquareModelChanged)}");
+                Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                          $"\n{_squareModel}->{value}");
 
                 if (_squareModel != null)
                 {

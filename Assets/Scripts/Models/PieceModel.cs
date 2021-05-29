@@ -1,4 +1,5 @@
 using System;
+using Helpers;
 using UnityEngine;
 using Utils;
 
@@ -22,6 +23,9 @@ namespace Models
                     return;
                 }
 
+                Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                          $"\n{_squareModel}->{value}");
+
                 if (_squareModel != null)
                 {
                     _squareModel.PieceModel = null;
@@ -31,8 +35,6 @@ namespace Models
                 {
                     _squareModel.PieceModel = this;
                 }
-
-                Debug.Log($"{this.GetType().Name}.{nameof(SquareModelChanged)}");
 
                 SquareModelChanged.Invoke(_squareModel);
             }
