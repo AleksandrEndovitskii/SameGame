@@ -104,7 +104,7 @@ namespace Managers
         {
             // TODO: will just iterate for all squares and create equivalent amount of pieces
             // TODO: probably can be optimized
-            foreach (var squareModels in GameManager.Instance.BoardManager.BoardModel.SquareModels)
+            foreach (var squareModels in GameManager.Instance.BoardManager.BoardModel.Value.SquareModels)
             {
                 foreach (var squareModel in squareModels)
                 {

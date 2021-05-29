@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Components;
 using Managers;
 using Models;
+using UniRx;
 using UnityEngine;
 
 namespace Views
@@ -18,7 +19,7 @@ namespace Views
 
         protected override void Initialize()
         {
-            BoardManagerOnBoardModelChanged(GameManager.Instance.BoardManager.BoardModel);
+            BoardManagerOnBoardModelChanged(GameManager.Instance.BoardManager.BoardModel.Value);
         }
         protected override void UnInitialize()
         {
@@ -27,7 +28,7 @@ namespace Views
 
         protected override void Subscribe()
         {
-            GameManager.Instance.BoardManager.BoardModelChanged += BoardManagerOnBoardModelChanged;
+            GameManager.Instance.BoardManager.BoardModel.Subscribe(BoardManagerOnBoardModelChanged);
         }
         protected override void UnSubscribe()
         {
@@ -112,7 +113,7 @@ namespace Views
 
         private void BoardManagerOnBoardModelChanged(BoardModel boardModel)
         {
-            _boardModel = GameManager.Instance.BoardManager.BoardModel;
+            _boardModel = GameManager.Instance.BoardManager.BoardModel.Value;
 
             Redraw();
         }

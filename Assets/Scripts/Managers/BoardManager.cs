@@ -1,6 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using Helpers;
 using Models;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -8,48 +9,33 @@ namespace Managers
 {
     public class BoardManager : MonoBehaviour, IInitilizable
     {
-        public Action<BoardModel> BoardModelChanged = delegate {  };
-
         [SerializeField]
         private int _rowsCount;
         [SerializeField]
         private int _cellsCount;
 
-        public BoardModel BoardModel
-        {
-            get
-            {
-                return _boardModel;
-            }
-            set
-            {
-                if (_boardModel == value)
-                {
-                    return;
-                }
-
-                Debug.Log($"{this.GetType().Name}.{nameof(BoardModelChanged)}");
-
-                _boardModel = value;
-
-                BoardModelChanged.Invoke(_boardModel);
-            }
-        }
-
-        private BoardModel _boardModel;
+        public ReactiveProperty<BoardModel> BoardModel;
 
         public void Initialize()
         {
-            BoardModel = new BoardModel(_rowsCount, _cellsCount);
+            BoardModel = new ReactiveProperty<BoardModel>()
+            {
+                Value = new BoardModel(_rowsCount, _cellsCount)
+            };
+            BoardModel.Subscribe(PieceModelOnChanged);
         }
 
         public SquareModel GetFreeSquareModel()
         {
             var squareModelsRowWithFreeSquare =
-                BoardModel.SquareModels.FirstOrDefault(x => x.Any(y => y.PieceModel.Value == null));
+                BoardModel.Value.SquareModels.FirstOrDefault(x => x.Any(y => y.PieceModel.Value == null));
             var freeSquareModel = squareModelsRowWithFreeSquare?.FirstOrDefault(x => x.PieceModel.Value == null);
 
             return freeSquareModel;
+        }
+        private void PieceModelOnChanged(BoardModel boardModel)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
         }
     }
 }
