@@ -65,6 +65,7 @@ namespace Views
         }
         protected override void UnInitialize()
         {
+            _squareModelOnPieceModelChangedSubscribtion?.Dispose();
         }
 
         protected override void Subscribe()
