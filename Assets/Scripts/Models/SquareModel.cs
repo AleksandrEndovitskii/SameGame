@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Helpers;
@@ -32,7 +33,7 @@ namespace Models
                         continue;
                     }
 
-                    if (connectedSquareModel.PieceModel == null)
+                    if (connectedSquareModel.PieceModel.Value == null)
                     {
                         continue;
                     }

@@ -1,4 +1,6 @@
+using System;
 using Models;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Views;
@@ -12,6 +14,7 @@ namespace Components
         private PieceView _pieceView;
 
         private Image _image;
+        private IDisposable _pieceViewOnPieceModelChangedSubscription;
 
         protected override void Initialize()
         {
@@ -25,20 +28,26 @@ namespace Components
         {
             if (_pieceView == null)
             {
-                Debug.LogError($"{this.GetType().Name}.{nameof(PieceModelChanged)} aborted" +
+                Debug.LogError($"{this.GetType().Name}.{nameof(PieceViewOnPieceModelChanged)} aborted" +
                                  $"\n {nameof(_pieceView)} == null");
 
                 return;
             }
 
-            _pieceView.PieceModelChanged += PieceModelChanged;
+            _pieceViewOnPieceModelChangedSubscription = _pieceView.PieceModel.Subscribe(PieceViewOnPieceModelChanged);
         }
         protected override void UnSubscribe()
         {
+            _pieceViewOnPieceModelChangedSubscription?.Dispose();
         }
 
-        private void PieceModelChanged(PieceModel pieceModel)
+        private void PieceViewOnPieceModelChanged(PieceModel pieceModel)
         {
+            if (pieceModel == null)
+            {
+                return;
+            }
+
             _image.color = pieceModel.Color;
         }
     }

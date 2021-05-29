@@ -42,7 +42,7 @@ namespace Components
 
             Debug.Log($"{this.GetType().Name}.{nameof(ButtonOnClick)}");
 
-            GameManager.Instance.SelectionManager.Select(_pieceView.PieceModel);
+            GameManager.Instance.SelectionManager.Select(_pieceView.PieceModel.Value);
         }
     }
 }

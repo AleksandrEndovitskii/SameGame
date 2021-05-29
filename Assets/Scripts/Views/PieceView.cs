@@ -1,39 +1,41 @@
 using System;
+using Components;
+using Helpers;
 using Models;
+using UniRx;
 using UnityEngine;
 
 namespace Views
 {
-    public class PieceView : MonoBehaviour
+    public class PieceView : BaseComponent
     {
-        public Action<PieceModel> PieceModelChanged = delegate {  };
+        public ReactiveProperty<PieceModel> PieceModel = new ReactiveProperty<PieceModel>();
 
-        public PieceModel PieceModel
-        {
-            get
-            {
-                return _pieceModel;
-            }
-            set
-            {
-                if (_pieceModel == value)
-                {
-                    return;
-                }
-
-                Debug.Log($"{this.GetType().Name}.{nameof(PieceModelChanged)}");
-
-                _pieceModel = value;
-
-                PieceModelChanged.Invoke(_pieceModel);
-            }
-        }
-
-        private PieceModel _pieceModel;
+        private IDisposable _pieceModelPieceModelOnChangedSubscription;
 
         public void Initialize(PieceModel pieceModel)
         {
-            PieceModel = pieceModel;
+            PieceModel.Value = pieceModel;
+        }
+        protected override void Initialize()
+        {
+        }
+        protected override void UnInitialize()
+        {
+        }
+
+        protected override void Subscribe()
+        {
+            _pieceModelPieceModelOnChangedSubscription = PieceModel.Subscribe(PieceModelOnChanged);
+        }
+        protected override void UnSubscribe()
+        {
+            _pieceModelPieceModelOnChangedSubscription?.Dispose();
+        }
+
+        private void PieceModelOnChanged(PieceModel pieceModel)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
         }
     }
 }
