@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Helpers;
 using Models;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -8,31 +9,7 @@ namespace Managers
 {
     public class ScoreManager : MonoBehaviour, IInitilizable
     {
-        public Action<int> ScoreChanged = delegate {  };
-
-        public int Score
-        {
-            get
-            {
-                return _score;
-            }
-            set
-            {
-                if (_score == value)
-                {
-                    return;
-                }
-
-                _score = value;
-
-                Debug.Log($"{this.GetType().Name}.{nameof(ScoreChanged)}" +
-                          $"\n {_score}");
-
-                ScoreChanged.Invoke(_score);
-            }
-        }
-
-        private int _score;
+        public ReactiveProperty<int> Score = new ReactiveProperty<int>();
 
         public void Initialize()
         {
@@ -41,7 +18,14 @@ namespace Managers
 
         private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)
         {
-            Score += pieceModels.Count;
+            Score.Value += pieceModels.Count;
+
+            Score.Subscribe(ScoreChanged);
+        }
+        private void ScoreChanged(int score)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                      $"\n{score}");
         }
     }
 }
