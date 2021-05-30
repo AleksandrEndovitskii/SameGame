@@ -1,5 +1,6 @@
 using System;
 using Helpers;
+using UniRx;
 using UnityEngine;
 using Utils;
 
@@ -7,45 +8,31 @@ namespace Models
 {
     public class PieceModel: ISelectable
     {
-        public Action<SquareModel> SquareModelChanged = delegate {  };
-
         public Color Color => _color;
-        public SquareModel SquareModel
-        {
-            get
-            {
-                return _squareModel;
-            }
-            set
-            {
-                if (_squareModel == value)
-                {
-                    return;
-                }
-
-                Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
-                          $"\n{_squareModel}->{value}");
-
-                if (_squareModel != null)
-                {
-                    _squareModel.PieceModel.Value = null;
-                }
-                _squareModel = value;
-                if (_squareModel != null)
-                {
-                    _squareModel.PieceModel.Value = this;
-                }
-
-                SquareModelChanged.Invoke(_squareModel);
-            }
-        }
+        public ReactiveProperty<SquareModel> SquareModel = new ReactiveProperty<SquareModel>();
 
         private Color _color;
-        private SquareModel _squareModel;
 
         public PieceModel(Color color)
         {
             _color = color;
+
+            SquareModel.Pairwise().Subscribe(OnSquareModelChanged);
+        }
+
+        private void OnSquareModelChanged(Pair<SquareModel> pair)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                      $"\n{pair.Previous?.Position}->{pair.Current?.Position}");
+
+            if (pair.Previous?.PieceModel != null)
+            {
+                pair.Previous.PieceModel.Value = null;
+            }
+            if (pair.Current?.PieceModel != null)
+            {
+                pair.Current.PieceModel.Value = this;
+            }
         }
     }
 }

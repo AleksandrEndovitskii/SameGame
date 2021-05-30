@@ -62,7 +62,7 @@ namespace Managers
 
             _pieceModels.Remove(pieceModel);
 
-            pieceModel.SquareModel.PieceModel.Value = null;
+            pieceModel.SquareModel.Value.PieceModel.Value = null;
             pieceModel.SquareModel = null;
 
             Debug.Log($"{this.GetType().Name}.{nameof(PieceModelRemoved)}");
@@ -96,7 +96,7 @@ namespace Managers
             foreach (var pieceModel in pieceModels)
             {
                 var freeSquareModel = GameManager.Instance.BoardManager.GetFreeSquareModel();
-                pieceModel.SquareModel = freeSquareModel;
+                pieceModel.SquareModel.Value = freeSquareModel;
             }
         }
 

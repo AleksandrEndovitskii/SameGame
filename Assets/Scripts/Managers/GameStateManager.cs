@@ -33,7 +33,7 @@ namespace Managers
 
             var pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor =
                 GameManager.Instance.PiecesManager.PieceModels.Where(x =>
-                    x.SquareModel.ConnectedSquareModelsOfTheSameColor.Count >= 1).ToList();
+                    x.SquareModel.Value.ConnectedSquareModelsOfTheSameColor.Count >= 1).ToList();
             if (pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor.Count == 0)
             {
                 GameState.Value = Utils.GameState.Loss;

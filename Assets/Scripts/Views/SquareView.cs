@@ -13,66 +13,36 @@ namespace Views
     [RequireComponent(typeof(LayoutElement))]
     public class SquareView : BaseComponent
     {
-        public Action<SquareModel> SquareModelChanged = delegate {  };
-
-        public SquareModel SquareModel
-        {
-            get
-            {
-                return _squareModel;
-            }
-            set
-            {
-                if (_squareModel == value)
-                {
-                    return;
-                }
-
-                Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
-                          $"\n{_squareModel}->{value}");
-
-                if (_squareModel != null)
-                {
-                    _squareModelOnPieceModelChangedSubscribtion?.Dispose();
-                }
-                _squareModel = value;
-                if (_squareModel != null)
-                {
-                    _squareModelOnPieceModelChangedSubscribtion =
-                        _squareModel.PieceModel.Subscribe(SquareModelOnPieceModelChanged);
-                }
-
-                SquareModelChanged.Invoke(_squareModel);
-            }
-        }
+        public ReactiveProperty<SquareModel> SquareModel = new ReactiveProperty<SquareModel>();
         public float Width => _layoutElement.preferredWidth;
         public float Height => _layoutElement.preferredHeight;
-        public Position Position => SquareModel.Position;
+        public Position Position => SquareModel.Value.Position;
 
         private LayoutElement _layoutElement;
-        private SquareModel _squareModel;
         private PieceView _pieceViewInstance;
-        private IDisposable _squareModelOnPieceModelChangedSubscribtion;
+        private IDisposable _squareModelOnPieceModelChangedSubscription;
+        private IDisposable _squareModelOnChangedSubscription;
 
         public void Initialize(SquareModel squareModel)
         {
-            SquareModel = squareModel;
+            SquareModel.Value = squareModel;
         }
-
         protected override void Initialize()
         {
             _layoutElement = this.gameObject.GetComponent<LayoutElement>();
         }
         protected override void UnInitialize()
         {
-            _squareModelOnPieceModelChangedSubscribtion?.Dispose();
+            _squareModelOnPieceModelChangedSubscription?.Dispose();
         }
 
         protected override void Subscribe()
         {
+            _squareModelOnChangedSubscription = SquareModel.Pairwise().Subscribe(SquareModelOnChanged);
         }
         protected override void UnSubscribe()
         {
+            _squareModelOnChangedSubscription?.Dispose();
         }
 
         private void TryDestroyPieceView(PieceView pieceViewInstance)
@@ -98,6 +68,21 @@ namespace Views
             return pieceViewInstance;
         }
 
+        private void SquareModelOnChanged(Pair<SquareModel> pair)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                      $"\n{pair.Previous?.Position}->{pair.Current?.Position}");
+
+            if (pair.Previous?.PieceModel != null)
+            {
+                _squareModelOnPieceModelChangedSubscription?.Dispose();
+            }
+            if (pair.Current?.PieceModel != null)
+            {
+                _squareModelOnPieceModelChangedSubscription =
+                    pair.Current?.PieceModel.Subscribe(SquareModelOnPieceModelChanged);
+            }
+        }
         private void SquareModelOnPieceModelChanged(PieceModel pieceModel)
         {
             TryDestroyPieceView(_pieceViewInstance);

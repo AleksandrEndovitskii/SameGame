@@ -49,7 +49,7 @@ namespace Managers
 
             Debug.Log($"{this.GetType().Name}.{nameof(AddObjectToSelectedObjects)}" +
                       $"\n {nameof(SelectedObjects)}.{nameof(SelectedObjects.Count)} = {SelectedObjects.Count} " +
-                      $"{pieceModel.SquareModel.Position}");
+                      $"{pieceModel.SquareModel.Value.Position}");
 
             SelectableAdded.Invoke(selectable);
         }

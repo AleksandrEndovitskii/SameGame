@@ -25,8 +25,8 @@ namespace Managers
         private void TryMovePieceModelsRecursively(Direction direction)
         {
             var botPieceModels = GameManager.Instance.PiecesManager.PieceModels.Where(x =>
-                x.SquareModel.GetConnectedSquareModel(direction) != null &&
-                x.SquareModel.GetConnectedSquareModel(direction).PieceModel.Value == null).ToList();
+                x.SquareModel.Value.GetConnectedSquareModel(direction) != null &&
+                x.SquareModel.Value.GetConnectedSquareModel(direction).PieceModel.Value == null).ToList();
             Debug.Log($"{nameof(botPieceModels)}.{nameof(botPieceModels.Count)} = {botPieceModels.Count}");
             if (botPieceModels.Count == 0)
             {
@@ -35,7 +35,7 @@ namespace Managers
 
             foreach (var botPieceModel in botPieceModels)
             {
-                botPieceModel.SquareModel = botPieceModel.SquareModel.GetConnectedSquareModel(direction);
+                botPieceModel.SquareModel.Value = botPieceModel.SquareModel.Value.GetConnectedSquareModel(direction);
             }
 
             TryMovePieceModelsRecursively(direction);
