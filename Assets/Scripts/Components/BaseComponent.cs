@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace Components
+﻿namespace Components
 {
-    public abstract class BaseComponent : MonoBehaviour
+    public abstract class BaseComponent : BaseMonoBehaviour
     {
         private void Awake()
         {
@@ -16,10 +14,5 @@ namespace Components
 
             UnInitialize();
         }
-
-        protected abstract void Initialize();
-        protected abstract void UnInitialize();
-        protected abstract void Subscribe();
-        protected abstract void UnSubscribe();
     }
 }

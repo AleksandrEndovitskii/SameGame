@@ -1,13 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Components;
 using Helpers;
 using Models;
 using UniRx;
 using UnityEngine;
-using Utils;
 
 namespace Managers
 {
-    public class BoardManager : MonoBehaviour, IInitilizable
+    public class BoardManager : BaseMonoBehaviour
     {
         [SerializeField]
         private int _rowsCount;
@@ -16,13 +17,31 @@ namespace Managers
 
         public ReactiveProperty<BoardModel> BoardModel;
 
-        public void Initialize()
+        private IDisposable _boardModelOnChangedSubscription;
+
+        public override void Initialize()
         {
             BoardModel = new ReactiveProperty<BoardModel>()
             {
                 Value = new BoardModel(_rowsCount, _cellsCount)
             };
-            BoardModel.Subscribe(PieceModelOnChanged);
+
+            Subscribe();
+        }
+        public override void UnInitialize()
+        {
+            BoardModel = null;
+
+            UnSubscribe();
+        }
+
+        public override void Subscribe()
+        {
+            _boardModelOnChangedSubscription = BoardModel.Subscribe(BoardModelOnChanged);
+        }
+        public override void UnSubscribe()
+        {
+            _boardModelOnChangedSubscription?.Dispose();
         }
 
         public SquareModel GetFreeSquareModel()
@@ -33,7 +52,7 @@ namespace Managers
 
             return freeSquareModel;
         }
-        private void PieceModelOnChanged(BoardModel boardModel)
+        private void BoardModelOnChanged(BoardModel boardModel)
         {
             Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
         }

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Components;
 using Models;
 using UnityEngine;
 using Utils;
 
 namespace Managers
 {
-    public class SelectionManager : MonoBehaviour, IInitilizable
+    public class SelectionManager : BaseMonoBehaviour
     {
         public Action<ISelectable> SelectableAdded = delegate {  };
         public Action<List<ISelectable>> SelectedObjectsChanged = delegate {  };
@@ -19,9 +20,25 @@ namespace Managers
             }
         }
 
-        private List<ISelectable> _selectedObjects = new List<ISelectable>();
+        private List<ISelectable> _selectedObjects;
 
-        public void Initialize()
+        public override void Initialize()
+        {
+            _selectedObjects = new List<ISelectable>();
+
+            Subscribe();
+        }
+        public override void UnInitialize()
+        {
+            _selectedObjects = null;
+
+            UnSubscribe();
+        }
+
+        public override void Subscribe()
+        {
+        }
+        public override void UnSubscribe()
         {
         }
 

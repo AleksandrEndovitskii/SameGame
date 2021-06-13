@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Components;
 using Models;
 using UnityEngine;
 using Utils;
@@ -7,7 +8,7 @@ using Random = System.Random;
 
 namespace Managers
 {
-    public class PiecesManager : MonoBehaviour, IInitilizable
+    public class PiecesManager : BaseMonoBehaviour
     {
         public Action<PieceModel> PieceModelAdded = delegate {  };
         public Action<PieceModel> PieceModelRemoved = delegate {  };
@@ -27,13 +28,31 @@ namespace Managers
         private List<PieceModel> _pieceModels = new List<PieceModel>();
         private Random _random = new Random();
 
-        public void Initialize()
+        public override void Initialize()
         {
             CreatePieceModels();
-
             PlacePieceModelsOnFreeSquares(_pieceModels);
 
+            Subscribe();
+        }
+        public override void UnInitialize()
+        {
+            RemovePieceModelsFromSquares(_pieceModels);
+            DestroyPieceModels();
+
+            UnSubscribe();
+        }
+
+        public override void Subscribe()
+        {
             GameManager.Instance.SelectionManager.SelectedObjectsChanged += SelectionManagerOnSelectedObjectsChanged;
+        }
+        public override void UnSubscribe()
+        {
+            if (GameManager.Instance.SelectionManager != null)
+            {
+                GameManager.Instance.SelectionManager.SelectedObjectsChanged -= SelectionManagerOnSelectedObjectsChanged;
+            }
         }
 
         public void Add(PieceModel pieceModel)
@@ -91,15 +110,6 @@ namespace Managers
             PieceModelsRemoved.Invoke(pieceModels);
         }
 
-        private void PlacePieceModelsOnFreeSquares(List<PieceModel> pieceModels)
-        {
-            foreach (var pieceModel in pieceModels)
-            {
-                var freeSquareModel = GameManager.Instance.BoardManager.GetFreeSquareModel();
-                pieceModel.SquareModel.Value = freeSquareModel;
-            }
-        }
-
         private void CreatePieceModels()
         {
             // TODO: will just iterate for all squares and create equivalent amount of pieces
@@ -113,6 +123,29 @@ namespace Managers
                     var pieceModel = new PieceModel(randomColor);
                     Add(pieceModel);
                 }
+            }
+        }
+        private void DestroyPieceModels()
+        {
+            foreach (var pieceModel in _pieceModels)
+            {
+                Remove(pieceModel);
+            }
+        }
+
+        private void PlacePieceModelsOnFreeSquares(List<PieceModel> pieceModels)
+        {
+            foreach (var pieceModel in pieceModels)
+            {
+                var freeSquareModel = GameManager.Instance.BoardManager.GetFreeSquareModel();
+                pieceModel.SquareModel.Value = freeSquareModel;
+            }
+        }
+        private void RemovePieceModelsFromSquares(List<PieceModel> pieceModels)
+        {
+            foreach (var pieceModel in pieceModels)
+            {
+                pieceModel.SquareModel.Value = null;
             }
         }
 

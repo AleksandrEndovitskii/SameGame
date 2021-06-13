@@ -27,20 +27,20 @@ namespace Views
         {
             SquareModel.Value = squareModel;
         }
-        protected override void Initialize()
+        public override void Initialize()
         {
             _layoutElement = this.gameObject.GetComponent<LayoutElement>();
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
             _squareModelOnPieceModelChangedSubscription?.Dispose();
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             _squareModelOnChangedSubscription = SquareModel.Pairwise().Subscribe(SquareModelOnChanged);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
             _squareModelOnChangedSubscription?.Dispose();
         }

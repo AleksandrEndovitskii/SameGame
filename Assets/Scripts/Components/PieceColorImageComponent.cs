@@ -16,15 +16,15 @@ namespace Components
         private Image _image;
         private IDisposable _pieceViewOnPieceModelChangedSubscription;
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             _image = this.gameObject.GetComponent<Image>();
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             if (_pieceView == null)
             {
@@ -36,7 +36,7 @@ namespace Components
 
             _pieceViewOnPieceModelChangedSubscription = _pieceView.PieceModel.Subscribe(PieceViewOnPieceModelChanged);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
             _pieceViewOnPieceModelChangedSubscription?.Dispose();
         }

@@ -1,28 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Components;
 using Helpers;
 using Models;
 using UniRx;
 using UnityEngine;
-using Utils;
 
 namespace Managers
 {
-    public class ScoreManager : MonoBehaviour, IInitilizable
+    public class ScoreManager : BaseMonoBehaviour
     {
-        public ReactiveProperty<int> Score = new ReactiveProperty<int>();
+        public ReactiveProperty<int> Score;
 
-        public void Initialize()
+        private IDisposable _scoreOnChangedSubscription;
+
+        public override void Initialize()
         {
+            Score = new ReactiveProperty<int>();
+
+            Subscribe();
+        }
+        public override void UnInitialize()
+        {
+            Score = null;
+
+            UnSubscribe();
+        }
+
+        public override void Subscribe()
+        {
+            _scoreOnChangedSubscription = Score.Subscribe(ScoreOnChanged);
+
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
+        }
+        public override void UnSubscribe()
+        {
+            _scoreOnChangedSubscription?.Dispose();
+
+            if (GameManager.Instance.PiecesManager != null)
+            {
+                GameManager.Instance.PiecesManager.PieceModelsRemoved -= PiecesManagerOnPieceModelsRemoved;
+            }
         }
 
         private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)
         {
             Score.Value += pieceModels.Count;
-
-            Score.Subscribe(ScoreChanged);
         }
-        private void ScoreChanged(int score)
+        private void ScoreOnChanged(int score)
         {
             Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
                       $"\n{score}");

@@ -17,18 +17,18 @@ namespace Views
         {
             PieceModel.Value = pieceModel;
         }
-        protected override void Initialize()
+        public override void Initialize()
         {
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             _pieceModelPieceModelOnChangedSubscription = PieceModel.Subscribe(PieceModelOnChanged);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
             _pieceModelPieceModelOnChangedSubscription?.Dispose();
         }

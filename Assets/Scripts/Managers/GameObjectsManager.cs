@@ -1,11 +1,11 @@
-﻿using Models;
+﻿using Components;
+using Models;
 using UnityEngine;
-using Utils;
 using Views;
 
 namespace Managers
 {
-    public class GameObjectsManager : MonoBehaviour, IInitilizable, IUnInitializeble
+    public class GameObjectsManager : BaseMonoBehaviour
     {
         [SerializeField]
         private Canvas _canvasPrefab;
@@ -19,23 +19,33 @@ namespace Managers
         private Canvas _canvasInstance;
         private BoardView _boardViewInstance;
 
-        public void Initialize()
+        public override void Initialize()
         {
             _canvasInstance = Instantiate(_canvasPrefab);
-
             _boardViewInstance = CreateBoard();
             _boardViewInstance.gameObject.transform.SetParent(_canvasInstance.transform);
 
-            RedrawCompleted();
-            _boardViewInstance.RedrawCompleted += RedrawCompleted;
+            BoardViewInstanceOnRedrawCompleted();
+            Subscribe();
         }
-        public void UnInitialize()
+        public override void UnInitialize()
         {
+            Destroy(_boardViewInstance);
+            Destroy(_canvasInstance);
+
+            UnSubscribe();
         }
 
-        private void RedrawCompleted()
+        public override void Subscribe()
         {
-            CenterBoardViewInstancePosition();
+            _boardViewInstance.RedrawCompleted += BoardViewInstanceOnRedrawCompleted;
+        }
+        public override void UnSubscribe()
+        {
+            if (_boardViewInstance != null)
+            {
+                _boardViewInstance.RedrawCompleted -= BoardViewInstanceOnRedrawCompleted;
+            }
         }
 
         private void CenterBoardViewInstancePosition()
@@ -59,6 +69,11 @@ namespace Managers
         {
             var boardViewInstance = Instantiate(_boardViewPrefab);
             return boardViewInstance;
+        }
+
+        private void BoardViewInstanceOnRedrawCompleted()
+        {
+            CenterBoardViewInstancePosition();
         }
     }
 }

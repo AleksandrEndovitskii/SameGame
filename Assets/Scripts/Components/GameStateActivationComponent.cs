@@ -13,19 +13,19 @@ namespace Components
 
         private IDisposable _gameStateManagerOnGameStateChangedSubscription;
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             Redraw(GameManager.Instance.GameStateManager.GameState.Value);
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             _gameStateManagerOnGameStateChangedSubscription = GameManager.Instance.GameStateManager.GameState.Subscribe(GameStateManagerOnGameStateChanged);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
             _gameStateManagerOnGameStateChangedSubscription?.Dispose();
         }

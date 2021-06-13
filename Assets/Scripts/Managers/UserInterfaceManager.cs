@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Utils;
 
 namespace Managers
 {
-    public class UserInterfaceManager : MonoBehaviour, IInitilizable, IUnInitializeble
+    public class UserInterfaceManager : BaseMonoBehaviour
     {
         [SerializeField]
         private Canvas _canvasPrefab;
@@ -15,15 +14,22 @@ namespace Managers
         private Canvas CanvasInstance;
         private EventSystem EventSystemInstance;
 
-        public void Initialize()
+        public override void Initialize()
         {
             CanvasInstance = Instantiate(_canvasPrefab);
             EventSystemInstance = Instantiate(_eventSystemPrefab);
         }
-        public void UnInitialize()
+        public override void UnInitialize()
         {
             Destroy(EventSystemInstance);
             Destroy(CanvasInstance);
+        }
+
+        public override void Subscribe()
+        {
+        }
+        public override void UnSubscribe()
+        {
         }
     }
 }

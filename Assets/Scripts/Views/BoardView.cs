@@ -17,20 +17,20 @@ namespace Views
 
         private BoardModel _boardModel;
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             BoardManagerOnBoardModelChanged(GameManager.Instance.BoardManager.BoardModel.Value);
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
             Clear();
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             GameManager.Instance.BoardManager.BoardModel.Subscribe(BoardManagerOnBoardModelChanged);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
         }
 

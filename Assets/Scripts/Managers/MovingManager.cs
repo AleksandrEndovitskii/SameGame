@@ -1,19 +1,36 @@
 using System.Collections.Generic;
 using System.Linq;
+using Components;
 using Models;
 using UnityEngine;
 using Utils;
 
 namespace Managers
 {
-    public class MovingManager : MonoBehaviour, IInitilizable
+    public class MovingManager : BaseMonoBehaviour
     {
         [SerializeField]
         private Direction direction = Direction.Left;
 
-        public void Initialize()
+        public override void Initialize()
+        {
+            Subscribe();
+        }
+        public override void UnInitialize()
+        {
+            UnSubscribe();
+        }
+
+        public override void Subscribe()
         {
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
+        }
+        public override void UnSubscribe()
+        {
+            if (GameManager.Instance.PiecesManager != null)
+            {
+                GameManager.Instance.PiecesManager.PieceModelsRemoved -= PiecesManagerOnPieceModelsRemoved;
+            }
         }
 
         private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)

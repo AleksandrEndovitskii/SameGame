@@ -12,18 +12,18 @@ namespace Components
 
         private TextMeshProUGUI _text;
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             _text = this.gameObject.GetComponent<TextMeshProUGUI>();
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
         }
 

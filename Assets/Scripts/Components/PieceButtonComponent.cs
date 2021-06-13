@@ -13,19 +13,19 @@ namespace Components
 
         private Button _button;
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             _button = this.gameObject.GetComponent<Button>();
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             _button.onClick.AddListener(ButtonOnClick);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
             _button.onClick.RemoveListener(ButtonOnClick);
         }

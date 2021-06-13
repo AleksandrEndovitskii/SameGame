@@ -14,21 +14,21 @@ namespace Components
         private readonly string _defaultValue = $"{nameof(GameManager.Instance.ScoreManager.Score)}: ";
         private IDisposable _scoreManagerOnScoreChangedSubscription;
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             _text = this.gameObject.GetComponent<TextMeshProUGUI>();
 
             Redraw(GameManager.Instance.ScoreManager.Score.Value);
         }
-        protected override void UnInitialize()
+        public override void UnInitialize()
         {
         }
 
-        protected override void Subscribe()
+        public override void Subscribe()
         {
             _scoreManagerOnScoreChangedSubscription = GameManager.Instance.ScoreManager.Score.Subscribe(ScoreManagerOnScoreChanged);
         }
-        protected override void UnSubscribe()
+        public override void UnSubscribe()
         {
             _scoreManagerOnScoreChangedSubscription?.Dispose();
         }

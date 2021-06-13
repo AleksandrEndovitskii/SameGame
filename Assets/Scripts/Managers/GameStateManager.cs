@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Components;
 using Helpers;
 using Models;
 using UniRx;
@@ -8,18 +10,43 @@ using Utils;
 
 namespace Managers
 {
-    public class GameStateManager : MonoBehaviour, IInitilizable
+    public class GameStateManager : BaseMonoBehaviour
     {
-        public ReactiveProperty<GameState> GameState = new ReactiveProperty<GameState>();
+        public ReactiveProperty<GameState> GameState;
 
         private GameState _gameState;
+        private IDisposable _gameStateOnChangedSubscription;
 
-        public void Initialize()
+        public override void Initialize()
         {
-            GameState.Value = Utils.GameState.InProgress;
+            GameState = new ReactiveProperty<GameState>
+            {
+                Value = Utils.GameState.InProgress
+            };
 
-            GameState.Subscribe(PieceModelOnChanged);
+            Subscribe();
+        }
+        public override void UnInitialize()
+        {
+            GameState = null;
+
+            UnSubscribe();
+        }
+
+        public override void Subscribe()
+        {
+            _gameStateOnChangedSubscription = GameState.Subscribe(GameStateOnChanged);
+
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
+        }
+        public override void UnSubscribe()
+        {
+            _gameStateOnChangedSubscription?.Dispose();
+
+            if (GameManager.Instance.PiecesManager != null)
+            {
+                GameManager.Instance.PiecesManager.PieceModelsRemoved -= PiecesManagerOnPieceModelsRemoved;
+            }
         }
 
         private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)
@@ -41,7 +68,7 @@ namespace Managers
                 return;
             }
         }
-        private void PieceModelOnChanged(GameState gameState)
+        private void GameStateOnChanged(GameState gameState)
         {
             Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
         }
