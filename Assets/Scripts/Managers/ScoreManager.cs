@@ -29,7 +29,7 @@ namespace Managers
 
         public override void Subscribe()
         {
-            _scoreOnChangedSubscription = Score.Subscribe(ScoreOnChanged);
+            _scoreOnChangedSubscription = Score.Pairwise().Subscribe(ScoreOnChanged);
 
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
         }
@@ -47,10 +47,10 @@ namespace Managers
         {
             Score.Value += pieceModels.Count;
         }
-        private void ScoreOnChanged(int score)
+        private void ScoreOnChanged(Pair<int> pair)
         {
             Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
-                      $"\n{score}");
+                      $"\n{pair.Previous}->{pair.Current}");
         }
     }
 }
