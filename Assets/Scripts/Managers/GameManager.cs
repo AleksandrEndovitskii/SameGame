@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Utils;
+﻿using Components;
+using UnityEngine;
 
 namespace Managers
 {
@@ -11,7 +11,7 @@ namespace Managers
     [RequireComponent(typeof(SelectionManager))]
     [RequireComponent(typeof(MovingManager))]
     [RequireComponent(typeof(GameStateManager))]
-    public class GameManager : MonoBehaviour, IInitilizable
+    public class GameManager : BaseMonoBehaviour
     {
         // static instance of GameManager which allows it to be accessed by any other script
         public static GameManager Instance;
@@ -44,8 +44,14 @@ namespace Managers
 
             Initialize();
         }
+        private void OnDestroy()
+        {
+            UnInitialize();
 
-        public void Initialize()
+            Instance = null;
+        }
+
+        public override void Initialize()
         {
             BoardManager.Initialize();
             GameObjectsManager.Initialize();
@@ -55,6 +61,24 @@ namespace Managers
             SelectionManager.Initialize();
             MovingManager.Initialize();
             GameStateManager.Initialize();
+        }
+        public override void UnInitialize()
+        {
+            GameStateManager.UnInitialize();
+            MovingManager.UnInitialize();
+            SelectionManager.UnInitialize();
+            ScoreManager.UnInitialize();
+            PiecesManager.UnInitialize();
+            UserInterfaceManager.UnInitialize();
+            GameObjectsManager.UnInitialize();
+            BoardManager.UnInitialize();
+        }
+
+        public override void Subscribe()
+        {
+        }
+        public override void UnSubscribe()
+        {
         }
     }
 }
