@@ -5,9 +5,9 @@ namespace Managers
 {
     [RequireComponent(typeof(BoardManager))]
     [RequireComponent(typeof(GameObjectsManager))]
+    [RequireComponent(typeof(ScoreManager))]
     [RequireComponent(typeof(UserInterfaceManager))]
     [RequireComponent(typeof(PiecesManager))]
-    [RequireComponent(typeof(ScoreManager))]
     [RequireComponent(typeof(SelectionManager))]
     [RequireComponent(typeof(MovingManager))]
     [RequireComponent(typeof(GameStateManager))]
@@ -18,9 +18,9 @@ namespace Managers
 
         public BoardManager BoardManager => this.gameObject.GetComponent<BoardManager>();
         public GameObjectsManager GameObjectsManager => this.gameObject.GetComponent<GameObjectsManager>();
+        public ScoreManager ScoreManager => this.gameObject.GetComponent<ScoreManager>();
         public UserInterfaceManager UserInterfaceManager => this.gameObject.GetComponent<UserInterfaceManager>();
         public PiecesManager PiecesManager => this.gameObject.GetComponent<PiecesManager>();
-        public ScoreManager ScoreManager => this.gameObject.GetComponent<ScoreManager>();
         public SelectionManager SelectionManager => this.gameObject.GetComponent<SelectionManager>();
         public MovingManager MovingManager => this.gameObject.GetComponent<MovingManager>();
         public GameStateManager GameStateManager => this.gameObject.GetComponent<GameStateManager>();
@@ -55,9 +55,9 @@ namespace Managers
         {
             BoardManager.Initialize();
             GameObjectsManager.Initialize();
+            ScoreManager.Initialize();
             UserInterfaceManager.Initialize();
             PiecesManager.Initialize();
-            ScoreManager.Initialize();
             SelectionManager.Initialize();
             MovingManager.Initialize();
             GameStateManager.Initialize();
