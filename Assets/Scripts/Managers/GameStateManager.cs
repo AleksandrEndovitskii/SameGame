@@ -28,14 +28,14 @@ namespace Managers
         }
         public override void UnInitialize()
         {
-            GameState = null;
-
             UnSubscribe();
+
+            GameState = null;
         }
 
         public override void Subscribe()
         {
-            _gameStateOnChangedSubscription = GameState.Subscribe(GameStateOnChanged);
+            _gameStateOnChangedSubscription = GameState.Pairwise().Subscribe(GameStateOnChanged);
 
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
         }
@@ -68,9 +68,10 @@ namespace Managers
                 return;
             }
         }
-        private void GameStateOnChanged(GameState gameState)
+        private void GameStateOnChanged(Pair<GameState> pair)
         {
-            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}");
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                      $"\n{pair.Previous}->{pair.Current}");
         }
     }
 }

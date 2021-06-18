@@ -18,9 +18,13 @@ namespace Managers
         {
             CanvasInstance = Instantiate(_canvasPrefab);
             EventSystemInstance = Instantiate(_eventSystemPrefab);
+
+            Subscribe();
         }
         public override void UnInitialize()
         {
+            UnSubscribe();
+
             Destroy(EventSystemInstance);
             Destroy(CanvasInstance);
         }

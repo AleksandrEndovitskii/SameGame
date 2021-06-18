@@ -22,9 +22,9 @@ namespace Managers
         }
         public override void UnInitialize()
         {
-            Score = null;
-
             UnSubscribe();
+
+            Score = null;
         }
 
         public override void Subscribe()

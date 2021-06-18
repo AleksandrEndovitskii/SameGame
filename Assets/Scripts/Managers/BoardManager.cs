@@ -30,9 +30,9 @@ namespace Managers
         }
         public override void UnInitialize()
         {
-            BoardModel = null;
-
             UnSubscribe();
+
+            BoardModel = null;
         }
 
         public override void Subscribe()

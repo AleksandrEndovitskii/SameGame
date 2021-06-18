@@ -30,10 +30,10 @@ namespace Managers
         }
         public override void UnInitialize()
         {
+            UnSubscribe();
+
             Destroy(_boardViewInstance);
             Destroy(_canvasInstance);
-
-            UnSubscribe();
         }
 
         public override void Subscribe()

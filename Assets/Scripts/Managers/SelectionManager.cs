@@ -30,9 +30,9 @@ namespace Managers
         }
         public override void UnInitialize()
         {
-            _selectedObjects = null;
-
             UnSubscribe();
+
+            _selectedObjects = null;
         }
 
         public override void Subscribe()

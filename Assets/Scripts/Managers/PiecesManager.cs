@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Components;
 using Models;
@@ -37,10 +37,10 @@ namespace Managers
         }
         public override void UnInitialize()
         {
+            UnSubscribe();
+
             RemovePieceModelsFromSquares(_pieceModels);
             DestroyPieceModels();
-
-            UnSubscribe();
         }
 
         public override void Subscribe()

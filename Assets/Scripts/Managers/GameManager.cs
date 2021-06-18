@@ -1,4 +1,4 @@
-﻿using Components;
+using Components;
 using UnityEngine;
 
 namespace Managers
@@ -61,9 +61,13 @@ namespace Managers
             SelectionManager.Initialize();
             MovingManager.Initialize();
             GameStateManager.Initialize();
+
+            Subscribe();
         }
         public override void UnInitialize()
         {
+            UnSubscribe();
+
             GameStateManager.UnInitialize();
             MovingManager.UnInitialize();
             SelectionManager.UnInitialize();
