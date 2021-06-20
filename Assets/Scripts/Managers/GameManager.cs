@@ -1,5 +1,8 @@
+﻿using System;
 using Components;
+using UniRx;
 using UnityEngine;
+using Utils;
 
 namespace Managers
 {
@@ -25,6 +28,8 @@ namespace Managers
         public MovingManager MovingManager => this.gameObject.GetComponent<MovingManager>();
         public GameStateManager GameStateManager => this.gameObject.GetComponent<GameStateManager>();
 
+        private IDisposable _gameStateOnChangedSubscription;
+
         private void Awake()
         {
             if (Instance == null)
@@ -43,6 +48,8 @@ namespace Managers
             }
 
             Initialize();
+
+            GameStateManager.GameState.Value = GameState.InProgress;
         }
         private void OnDestroy()
         {
@@ -80,9 +87,21 @@ namespace Managers
 
         public override void Subscribe()
         {
+            _gameStateOnChangedSubscription = GameStateManager.GameState.Subscribe(GameStateOnChanged);
         }
         public override void UnSubscribe()
         {
+            _gameStateOnChangedSubscription?.Dispose();
+        }
+
+        private void GameStateOnChanged(GameState gameState)
+        {
+            if (gameState != GameState.InProgress)
+            {
+                return;
+            }
+
+            ReInitialize();
         }
     }
 }

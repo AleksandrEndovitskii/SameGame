@@ -21,7 +21,7 @@ namespace Managers
         {
             GameState = new ReactiveProperty<GameState>
             {
-                Value = Utils.GameState.InProgress
+                Value = Utils.GameState.NotStarted
             };
 
             Subscribe();
