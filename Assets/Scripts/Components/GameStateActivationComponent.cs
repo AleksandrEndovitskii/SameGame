@@ -15,7 +15,14 @@ namespace Components
 
         public override void Initialize()
         {
-            Redraw(GameManager.Instance.GameStateManager.GameState.Value);
+            if (GameManager.Instance.GameStateManager.GameState != null)
+            {
+                GameStateManagerOnGameStateChanged(GameManager.Instance.GameStateManager.GameState.Value);
+            }
+            else
+            {
+                GameStateManagerOnGameStateChanged(GameState.NotStarted);
+            }
         }
         public override void UnInitialize()
         {
@@ -23,7 +30,10 @@ namespace Components
 
         public override void Subscribe()
         {
-            _gameStateManagerOnGameStateChangedSubscription = GameManager.Instance.GameStateManager.GameState.Subscribe(GameStateManagerOnGameStateChanged);
+            if (GameManager.Instance.GameStateManager.GameState != null)
+            {
+                _gameStateManagerOnGameStateChangedSubscription = GameManager.Instance.GameStateManager.GameState.Subscribe(GameStateManagerOnGameStateChanged);
+            }
         }
         public override void UnSubscribe()
         {
@@ -32,7 +42,8 @@ namespace Components
 
         private void Redraw(GameState gameState)
         {
-            this.gameObject.SetActive(gameState == _gameState);
+            var isActive = gameState == _gameState;
+            this.gameObject.SetActive(isActive);
         }
 
         private void GameStateManagerOnGameStateChanged(GameState gameState)
