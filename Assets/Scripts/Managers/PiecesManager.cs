@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Components;
 using Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
 using Random = System.Random;
@@ -81,7 +83,10 @@ namespace Managers
 
             _pieceModels.Remove(pieceModel);
 
-            pieceModel.SquareModel.Value.PieceModel.Value = null;
+            if (pieceModel.SquareModel.Value != null)
+            {
+                pieceModel.SquareModel.Value.PieceModel.Value = null;
+            }
             pieceModel.SquareModel = null;
 
             Debug.Log($"{this.GetType().Name}.{nameof(PieceModelRemoved)}");
@@ -127,9 +132,9 @@ namespace Managers
         }
         private void DestroyPieceModels()
         {
-            foreach (var pieceModel in _pieceModels)
+            while (_pieceModels.Any())
             {
-                Remove(pieceModel);
+                Remove(_pieceModels.First());
             }
         }
 
