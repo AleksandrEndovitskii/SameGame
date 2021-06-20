@@ -11,13 +11,13 @@ namespace Managers
         [SerializeField]
         private EventSystem _eventSystemPrefab;
 
-        private Canvas CanvasInstance;
-        private EventSystem EventSystemInstance;
+        private Canvas _canvasInstance;
+        private EventSystem _eventSystemInstance;
 
         public override void Initialize()
         {
-            CanvasInstance = Instantiate(_canvasPrefab);
-            EventSystemInstance = Instantiate(_eventSystemPrefab);
+            _canvasInstance = Instantiate(_canvasPrefab);
+            _eventSystemInstance = Instantiate(_eventSystemPrefab);
 
             Subscribe();
         }
@@ -25,8 +25,14 @@ namespace Managers
         {
             UnSubscribe();
 
-            Destroy(EventSystemInstance);
-            Destroy(CanvasInstance);
+            if (_eventSystemInstance != null)
+            {
+                Destroy(_eventSystemInstance.gameObject);
+            }
+            if (_canvasInstance != null)
+            {
+                Destroy(_canvasInstance.gameObject);
+            }
         }
 
         public override void Subscribe()

@@ -32,8 +32,14 @@ namespace Managers
         {
             UnSubscribe();
 
-            Destroy(_boardViewInstance);
-            Destroy(_canvasInstance);
+            if (_boardViewInstance != null)
+            {
+                Destroy(_boardViewInstance.gameObject);
+            }
+            if (_canvasInstance != null)
+            {
+                Destroy(_canvasInstance.gameObject);
+            }
         }
 
         public override void Subscribe()

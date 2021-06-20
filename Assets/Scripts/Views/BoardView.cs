@@ -48,7 +48,7 @@ namespace Views
             {
                 for (var j = 0; j < _squareViewInstances[i].Count; j++)
                 {
-                    Destroy(_squareViewInstances[i][j]);
+                    Destroy(_squareViewInstances[i][j].gameObject);
                 }
             }
 
