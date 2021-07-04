@@ -21,9 +21,15 @@ namespace Managers
 
         public override void Initialize()
         {
-            _canvasInstance = Instantiate(_canvasPrefab);
-            _boardViewInstance = CreateBoard();
-            _boardViewInstance.gameObject.transform.SetParent(_canvasInstance.transform);
+            if (_canvasInstance == null)
+            {
+                _canvasInstance = Instantiate(_canvasPrefab);
+            }
+            if (_boardViewInstance == null)
+            {
+                _boardViewInstance = CreateBoard();
+                _boardViewInstance.gameObject.transform.SetParent(_canvasInstance.transform);
+            }
 
             BoardViewInstanceOnRedrawCompleted();
             Subscribe();
@@ -35,10 +41,12 @@ namespace Managers
             if (_boardViewInstance != null)
             {
                 Destroy(_boardViewInstance.gameObject);
+                _boardViewInstance = null;
             }
             if (_canvasInstance != null)
             {
                 Destroy(_canvasInstance.gameObject);
+                _canvasInstance = null;
             }
         }
 

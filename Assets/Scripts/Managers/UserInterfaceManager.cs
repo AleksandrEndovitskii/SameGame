@@ -16,8 +16,14 @@ namespace Managers
 
         public override void Initialize()
         {
-            _canvasInstance = Instantiate(_canvasPrefab);
-            _eventSystemInstance = Instantiate(_eventSystemPrefab);
+            if (_canvasInstance == null)
+            {
+                _canvasInstance = Instantiate(_canvasPrefab);
+            }
+            if (_eventSystemInstance == null)
+            {
+                _eventSystemInstance = Instantiate(_eventSystemPrefab);
+            }
 
             Subscribe();
         }
@@ -28,10 +34,12 @@ namespace Managers
             if (_eventSystemInstance != null)
             {
                 Destroy(_eventSystemInstance.gameObject);
+                _eventSystemInstance = null;
             }
             if (_canvasInstance != null)
             {
                 Destroy(_canvasInstance.gameObject);
+                _eventSystemInstance = null;
             }
         }
 

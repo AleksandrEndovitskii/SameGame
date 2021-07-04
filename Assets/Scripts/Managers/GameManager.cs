@@ -47,13 +47,15 @@ namespace Managers
                 }
             }
 
-            Initialize();
-
+            GameStateManager.Initialize();
+            Subscribe();
             GameStateManager.GameState.Value = GameState.InProgress;
         }
         private void OnDestroy()
         {
-            UnInitialize();
+            GameStateManager.GameState.Value = GameState.NotStarted;
+            UnSubscribe();
+            GameStateManager.UnInitialize();
 
             Instance = null;
         }
@@ -67,15 +69,9 @@ namespace Managers
             PiecesManager.Initialize();
             SelectionManager.Initialize();
             MovingManager.Initialize();
-            GameStateManager.Initialize();
-
-            Subscribe();
         }
         public override void UnInitialize()
         {
-            UnSubscribe();
-
-            GameStateManager.UnInitialize();
             MovingManager.UnInitialize();
             SelectionManager.UnInitialize();
             ScoreManager.UnInitialize();
@@ -96,12 +92,10 @@ namespace Managers
 
         private void GameStateOnChanged(GameState gameState)
         {
-            if (gameState != GameState.InProgress)
+            if (gameState == GameState.InProgress)
             {
-                return;
+                ReInitialize();
             }
-
-            ReInitialize();
         }
     }
 }

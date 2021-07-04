@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 134319155984714724, guid: 7d0a82ed8c7d21941a9feb23afecd5e6, type: 3}
       propertyPath: _gameState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 490480395827669954, guid: 7d0a82ed8c7d21941a9feb23afecd5e6, type: 3}
       propertyPath: m_Name
