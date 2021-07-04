@@ -1,4 +1,5 @@
 using System;
+using Helpers;
 using Managers;
 using UniRx;
 using UnityEngine;
@@ -43,6 +44,8 @@ namespace Components
         private void Redraw(GameState gameState)
         {
             var isActive = gameState == _gameState;
+            Debug.Log($"{this.gameObject.name}.{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                      $"\n{nameof(isActive)}={isActive}");
             this.gameObject.SetActive(isActive);
         }
 
