@@ -20,9 +20,10 @@ MonoBehaviour:
   - m_GUID: 52e2865fe7b156647a3bbe6e6895eeab
     m_Address: Assets/Prefabs/UI/Canvases/UserInterfaceCanvas.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_SerializedLabels:
+    - test
+    m_MainAsset: {fileID: 3007608049728947850, guid: 52e2865fe7b156647a3bbe6e6895eeab, type: 3}
+    m_TargetAsset: {fileID: 3007608049728947850, guid: 52e2865fe7b156647a3bbe6e6895eeab, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d9eee02e75e809f488beb34408032f62, type: 2}
   m_SchemaSet:
