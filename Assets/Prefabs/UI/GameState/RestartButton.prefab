@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3176752476814977843, guid: b7cffb8f8a3b6a24a9ca7e48381fbaa9, type: 3}
       propertyPath: _gameState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3181820797637895592, guid: b7cffb8f8a3b6a24a9ca7e48381fbaa9, type: 3}
       propertyPath: m_Pivot.x

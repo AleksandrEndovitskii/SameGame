@@ -39,7 +39,7 @@ namespace Managers
             if (_canvasInstance != null)
             {
                 Destroy(_canvasInstance.gameObject);
-                _eventSystemInstance = null;
+                _canvasInstance = null;
             }
         }
 

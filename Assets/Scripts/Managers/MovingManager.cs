@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Components;
@@ -9,6 +10,8 @@ namespace Managers
 {
     public class MovingManager : BaseMonoBehaviour
     {
+        public Action PieceModelsMoved = delegate {  };
+
         [SerializeField]
         private Direction direction = Direction.Left;
 
@@ -37,6 +40,8 @@ namespace Managers
         {
             TryMovePieceModelsRecursively(Direction.Bot);
             TryMovePieceModelsRecursively(direction);
+
+            PieceModelsMoved.Invoke();
         }
 
         private void TryMovePieceModelsRecursively(Direction direction)

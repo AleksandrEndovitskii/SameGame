@@ -92,9 +92,13 @@ namespace Managers
 
         private void GameStateOnChanged(GameState gameState)
         {
-            if (gameState == GameState.InProgress)
+            if (gameState == GameState.NotStarted)
             {
+                _gameStateOnChangedSubscription?.Dispose();
+                GameStateManager.GameState.Value = GameState.InProgress;
+
                 ReInitialize();
+                _gameStateOnChangedSubscription = GameStateManager.GameState.Subscribe(GameStateOnChanged);
             }
         }
     }

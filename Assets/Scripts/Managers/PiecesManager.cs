@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Components;
+using Helpers;
 using Models;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
 using Random = System.Random;
@@ -15,6 +15,7 @@ namespace Managers
         public Action<PieceModel> PieceModelAdded = delegate {  };
         public Action<PieceModel> PieceModelRemoved = delegate {  };
         public Action<List<PieceModel>> PieceModelsRemoved = delegate {  };
+        public Action<List<PieceModel>> PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged = delegate {  };
 
         [SerializeField]
         private List<Color> _colors = new List<Color>();
@@ -24,6 +25,16 @@ namespace Managers
             get
             {
                 return _pieceModels;
+            }
+        }
+        public List<PieceModel> PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor
+        {
+            get
+            {
+                var pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor =
+                    PieceModels.Where(x => x.SquareModel.Value.ConnectedSquareModelsOfTheSameColor.Count >= 1).ToList();
+
+                return pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor;
             }
         }
 
@@ -48,13 +59,21 @@ namespace Managers
         public override void Subscribe()
         {
             GameManager.Instance.SelectionManager.SelectedObjectsChanged += SelectionManagerOnSelectedObjectsChanged;
+            GameManager.Instance.MovingManager.PieceModelsMoved += OnPieceModelsMoved;
+            PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged += OnPieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged;
         }
+
         public override void UnSubscribe()
         {
             if (GameManager.Instance.SelectionManager != null)
             {
                 GameManager.Instance.SelectionManager.SelectedObjectsChanged -= SelectionManagerOnSelectedObjectsChanged;
             }
+            if (GameManager.Instance.MovingManager != null)
+            {
+                GameManager.Instance.MovingManager.PieceModelsMoved -= OnPieceModelsMoved;
+            }
+            PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged -= OnPieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged;
         }
 
         public void Add(PieceModel pieceModel)
@@ -154,6 +173,15 @@ namespace Managers
             }
         }
 
+        private void OnPieceModelsMoved()
+        {
+            PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged.Invoke(PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor);
+        }
+        private void OnPieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged(List<PieceModel> pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor)
+        {
+            Debug.Log($"{this.GetType().Name}.{ReflectionHelper.GetCallerMemberName()}" +
+                      $"\n{pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor.Count}");
+        }
         private void SelectionManagerOnSelectedObjectsChanged(List<ISelectable> selectables)
         {
             if (selectables.Count < 2)

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Components;
 using Helpers;
 using Models;
@@ -38,6 +37,7 @@ namespace Managers
             _gameStateOnChangedSubscription = GameState.Pairwise().Subscribe(GameStateOnChanged);
 
             GameManager.Instance.PiecesManager.PieceModelsRemoved += PiecesManagerOnPieceModelsRemoved;
+            GameManager.Instance.PiecesManager.PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged += PiecesManagerOnPieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged;
         }
         public override void UnSubscribe()
         {
@@ -47,6 +47,10 @@ namespace Managers
             {
                 GameManager.Instance.PiecesManager.PieceModelsRemoved -= PiecesManagerOnPieceModelsRemoved;
             }
+            if (GameManager.Instance.PiecesManager != null)
+            {
+                GameManager.Instance.PiecesManager.PieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged -= PiecesManagerOnPieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged;
+            }
         }
 
         private void PiecesManagerOnPieceModelsRemoved(List<PieceModel> pieceModels)
@@ -54,18 +58,13 @@ namespace Managers
             if (GameManager.Instance.PiecesManager.PieceModels.Count == 0)
             {
                 GameState.Value = Utils.GameState.Win;
-
-                return;
             }
-
-            var pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor =
-                GameManager.Instance.PiecesManager.PieceModels.Where(x =>
-                    x.SquareModel.Value.ConnectedSquareModelsOfTheSameColor.Count >= 1).ToList();
+        }
+        private void PiecesManagerOnPieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColorChanged(List<PieceModel> pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor)
+        {
             if (pieceModelsWithAtLeastOneConnectedPieceModelOfTheSameColor.Count == 0)
             {
                 GameState.Value = Utils.GameState.Loss;
-
-                return;
             }
         }
         private void GameStateOnChanged(Pair<GameState> pair)
